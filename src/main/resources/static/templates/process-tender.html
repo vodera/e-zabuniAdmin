@@ -1,0 +1,154 @@
+<section class="content">
+    <!-- START BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="">Customer Onboarding</li>
+        <li class="">New Customer</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav custom-nav nav-pills nav-wizard">
+                    <li ng-class="{'active': CurrentStep === 1}"><a ng-class="{'disabled': CurrentStep < 1}" href="none" data-toggle="tab" ng-click="CurrentStep > 1 && navigatetoTab(1)">Evaluation of Tender</a></li>
+                    <li ng-class="{'active': CurrentStep === 2}"><a ng-class="{'disabled': (CurrentStep < 2 && HighestLevel < 2)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 2 || HighestLevel >= 2) && navigatetoTab(2))">Award of Tender</a></li>
+                    <li ng-class="{'active': CurrentStep === 3}"><a ng-class="{'disabled': (CurrentStep < 3 && HighestLevel < 3)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 3 || HighestLevel >= 3) && navigatetoTab(3))">Contract</a></li>
+                    <li ng-class="{'active': CurrentStep === 4}"><a ng-class="{'disabled': (CurrentStep < 4 && HighestLevel < 4)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 4 || HighestLevel >= 3) && navigatetoTab(4))">LPO</a></li>
+<!--                    <li ng-class="{'active': CurrentStep === 5}"><a ng-class="{'disabled': (CurrentStep < 5 && HighestLevel < 5)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 5 || HighestLevel >= 5) && navigatetoTab(5))">Tender In-Progress</a></li>-->
+<!--                    <li ng-class="{'active': CurrentStep === 6}"><a ng-class="{'disabled': (CurrentStep < 6 && HighestLevel < 6)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 6 || HighestLevel >= 5) && navigatetoTab(6))">Payment(IFMIS)</a></li>-->
+                </ul>
+                <div class="tab-content" ng-show="CurrentStep === 1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><span class="fa fa-user"></span><strong> Principal Customer KYC Info</strong></h4>
+                        </div>
+                        <div class="panel-body">
+                            <div id="datatable_wrapper" class="">
+                                <form class="form-horizontal" name="searchForm">
+                                    <div id="cit_agent_filter" class="dataTables_filter">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-3 text-left">Search:</label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control " placeholder="keyword(s)" type="search" data-ng-model="UserFilter.keyword">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3">User Type:</label>
+                                                    <div class="col-md-8">
+                                                        <select data-ng-options="UserFilter.id as UserFilter.userType for UserFilter in UserTypes" data-ng-model="UserFilter.userType" class="form-control" ng-change='userTypeChange(UserFilter.userType)'>
+                                                            <option value="" ng-if="!userType">Select User Category</option>
+                                                        </select>
+                                                        <!--                                                        <select data-ng-options="userType for userType in ['Bank Admin', 'Bank Operator', 'Customer', 'CIT Agent', 'CIT Teller']" data-ng-model="UserFilter.userType" class="form-control">
+                                                                                                                    <option value="" ng-if="!userType">Select User Category</option>
+                                                                                                                </select>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">User Status:</label>
+                                                    <div class="col-md-7">
+                                                        <select data-ng-options="userStatus for userStatus in ['All', 'Active', 'Inactive']" data-ng-model="UserFilter.userStatus" class="form-control">
+                                                            <option value="" ng-if="!userStatus">Select Status</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Approval Status:</label>
+                                                    <div class="col-md-7">
+                                                        <select data-ng-options="approvalStatus for approvalStatus in ['All', 'Approved', 'Rejected', 'Unapproved']" data-ng-model="UserFilter.approvalStatus" class="form-control">
+                                                            <option value="" ng-if="!approvalStatus">Select Approval Status</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <div class="btn-group pull-right">
+                                                        <button class="btn btn-default" ng-click="resetUsersFilter()"><i class="fa fa-times"></i> Reset</button>
+                                                        <button class="btn btn-info" ng-click="listUsers()"><i class="fa fa-filter"></i> Filter</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                                    <thead>
+                                    <tr>
+                                        <th class="sorting col-centered">No</th>
+                                        <th class="sorting">Reference Numbe</th>
+                                        <th class="sorting">Applicant Reference Number</th>
+                                        <th class="sorting">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="SubmittedTender in SubmittedTenders track by $index">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{SubmittedTender.ReferenceNo}}</td>
+                                        <td>{{SubmittedTender.ApplicantReferenceNumber}}</td>
+                                        <td>
+                                            <div class="btn-group pull-left">
+                                                <button class="btn btn-danger btn-xs" ng-click="openTender(SubmittedTender)"><i class="fa fa-search-plus"></i> DOWNLOAD </button>
+                                                <!--<button h00ssion='LOCK_USERS' class="btn btn-success btn-xs" ng-click="unlockUser(SystemUser, true)"><i class="fa fa-unlock-alt"></i> Unlock </button>-->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div ng-include src="'templates/table-footer.html'"></div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><span class="fa fa-user"></span><strong> Tender Report</strong></h4>
+                                </div>
+                                <div class="panel-body">
+                                    <form name="TenderView" class="form-horizontal">
+                                        <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                                            <thead>
+                                            <tr>
+
+                                                <th class="sorting">Upload Document</th>
+                                                <th class="sorting">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>NIB/T/006/2018-2017</td>
+                                                <td>
+                                                    <div class="btn-group pull-left">
+                                                        <input type="file" id="myFile" name="filename">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-secondary" ng-click="proceedNextStep(PrincipalCustomerForm)"><i class="fa fa-chevron-right"></i> Proceed</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="CurrentStep === 2">
+                    <div  ng-include src="'templates/customer-outlet.html'" flex></div>
+                </div>
+                <div ng-if="CurrentStep === 3">
+                    <div  ng-include src="'templates/customer-contact.html'" flex></div>
+                </div>
+                <div ng-if="CurrentStep === 4">
+                    <div  ng-include src="'templates/confirm-customer.html'" flex></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
+</section>
