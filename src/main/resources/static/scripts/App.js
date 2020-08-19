@@ -812,7 +812,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 // $scope.ShowOngoingTenderView = true;
                 // console.log("button clicked 2");
 
-                $window.location = '#/SubmittedTender';
+                $window.location = '#/ProcessTender';
             }
             $scope.add = function(){
                 $scope.TenderEdit = true;
@@ -829,33 +829,45 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
             {ApplicantReferenceNumber: "APPLICANT/T/2017/104", ReferenceNo: "NIB/T/006/2018-2017"},
         ];
 
+        $scope.Notifications =
+            [
+                {notification: "NO", companyName: "Turubini Limited", ApplicantReferenceNumber: "APPLICANT/T/2017/101",},
+                {notification: "NO", companyName: "QWERTY Solutions", ApplicantReferenceNumber: "APPLICANT/T/2017/102",},
+                {notification: "YES", companyName: "ATRIA Group Limited", ApplicantReferenceNumber: "APPLICANT/T/2017/103",},
+                {notification: "NO", companyName: "Microsoft Solutions", ApplicantReferenceNumber: "APPLICANT/T/2017/104",}]
+
+        $scope.process = function (){
+            $scope.Payment = true;
+        }
+
 
         $scope.LinkCustAcc = {search: ''};
         $scope.BankCustomer = {search: ''};
         $scope.searchPrincipal = function (clear) {
 
-            //     if (clear) {
-            //         $dialogConfirm("Please note that all the data captured so far will be cleared. Are you sure that you want to clear?").then(function () {
-            //             $scope.BankCustomer = {search: ''};
-            //             $scope.clearCustomer(false);
-            //         }, function () {
-            //             return;
-            //         });
-            //     } else {
-            //         if (!$scope.BankCustomer.search) {
-            //             return;
-            //         }
-            //         if ($scope.PrincipalCustomer.CustomerOutlets.length > 0) {
-            //             $dialogConfirm("Please note that by searching again all the data captured so far will be cleared! Do you want to continue?").then(function () {
-            //                 $scope.searchAccount(true);
-            //             }, function () {
-            //                 return;
-            //             });
-            //         } else {
-            //             $scope.searchAccount(true);
-            //         }
-            //     }
-            // };
+            if (clear) {
+                $dialogConfirm("Please note that all the data captured so far will be cleared. Are you sure that you want to clear?").then(function () {
+                    $scope.BankCustomer = {search: ''};
+                    $scope.clearCustomer(false);
+                }, function () {
+                    return;
+                });
+            } else {
+                if (!$scope.BankCustomer.search) {
+                    return;
+                }
+                if ($scope.PrincipalCustomer.CustomerOutlets.length > 0) {
+                    $dialogConfirm("Please note that by searching again all the data captured so far will be cleared! Do you want to continue?").then(function () {
+                        $scope.searchAccount(true);
+                    }, function () {
+                        return;
+                    });
+                } else {
+                    $scope.searchAccount(true);
+                }
+            }
+        };
+
             $scope.searchAccount = function (isPrincipal) {
                 var searchInput = '';
                 $scope.isPrincipal = isPrincipal;
@@ -1086,47 +1098,47 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
 
                 switch ($scope.CurrentStep) {
                     case 1:
-                        if (!$scope.PrincipalCustomerForm.$valid) {
-                            $rootScope.notify('warning', 'Warning', 'Enter the physical location')
-                            return;
-                        }
-                        if ($scope.CustomerAccounts.length > 0) {
-                            $scope.PrincipalCustomer.CustomerAccounts = $scope.CustomerAccounts;
-                            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
-                        } else {
-                            $rootScope.alertDialog('You must add atleast one Account to proceed!');
-                            return;
-                        }
+                        // if (!$scope.PrincipalCustomerForm.$valid) {
+                        //     $rootScope.notify('warning', 'Warning', 'Enter the physical location')
+                        //     return;
+                        // }
+                        // if ($scope.CustomerAccounts.length > 0) {
+                        //     $scope.PrincipalCustomer.CustomerAccounts = $scope.CustomerAccounts;
+                        //     $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+                        // } else {
+                        //     $rootScope.alertDialog('You must add atleast one Account to proceed!');
+                        //     return;
+                        // }
                         break;
                     case 2:
-                        if ($scope.CustomerOutlets.length > 0) {
-                            $scope.PrincipalCustomer.CustomerOutlets = $scope.CustomerOutlets;
-                            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
-                        } else {
-                            $rootScope.alertDialog('You must add atleast one Outlet to proceed!');
-                            return;
-                        }
+                        // if ($scope.CustomerOutlets.length > 0) {
+                        //     $scope.PrincipalCustomer.CustomerOutlets = $scope.CustomerOutlets;
+                        //     $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+                        // } else {
+                        //     $rootScope.alertDialog('You must add atleast one Outlet to proceed!');
+                        //     return;
+                        // }
                         break;
                     case 3:
-                        var CustomerContactsEmail = [];
-                        $scope.CustomerContacts = [];
-                        for (var i = 0; i < $scope.CustomerOutlets.length; i++) {
-                            var OutletContacts = $scope.CustomerOutlets[i].OutletContacts;
-                            for (var j = 0; j < OutletContacts.length; j++) {
-                                if (CustomerContactsEmail.indexOf(OutletContacts[j].emailAddress) === -1) {
-                                    CustomerContactsEmail.push(OutletContacts[j].emailAddress);
-                                    $scope.CustomerContacts.push(OutletContacts[j]);
-                                }
-                            }
-                        }
-                        if ($scope.CustomerContacts.length > 0) {
-                            $scope.PrincipalCustomer.CustomerOutlets = $scope.CustomerOutlets;
-                            $scope.PrincipalCustomer.CustomerContacts = $scope.CustomerContacts;
-                            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
-                        } else {
-                            $rootScope.alertDialog('You must add contacts to Outlets to proceed!');
-                            return;
-                        }
+                        // var CustomerContactsEmail = [];
+                        // $scope.CustomerContacts = [];
+                        // for (var i = 0; i < $scope.CustomerOutlets.length; i++) {
+                        //     var OutletContacts = $scope.CustomerOutlets[i].OutletContacts;
+                        //     for (var j = 0; j < OutletContacts.length; j++) {
+                        //         if (CustomerContactsEmail.indexOf(OutletContacts[j].emailAddress) === -1) {
+                        //             CustomerContactsEmail.push(OutletContacts[j].emailAddress);
+                        //             $scope.CustomerContacts.push(OutletContacts[j]);
+                        //         }
+                        //     }
+                        // }
+                        // if ($scope.CustomerContacts.length > 0) {
+                        //     $scope.PrincipalCustomer.CustomerOutlets = $scope.CustomerOutlets;
+                        //     $scope.PrincipalCustomer.CustomerContacts = $scope.CustomerContacts;
+                        //     $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+                        // } else {
+                        //     $rootScope.alertDialog('You must add contacts to Outlets to proceed!');
+                        //     return;
+                        // }
                         break;
                 }
                 $scope.CurrentStep += 1;
@@ -1274,7 +1286,6 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 $scope.HighestLevel = $scope.PrincipalCustomer.HighestLevel;
                 $scope.loadCustomerCategories();
             }
-        }
     }])
 
     .controller('CompletedTenderCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
