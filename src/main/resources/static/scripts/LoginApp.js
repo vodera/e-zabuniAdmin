@@ -181,6 +181,7 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
                     $window.localStorage['userType'] = "Bank Admin";
                     $window.location = '/';
                     $window.localStorage['redirect'] = "dashboard";
+                    $window.localStorage['loggedIn'] = "true";
 
 
 //                     if (!$scope.OTPForm.$valid) {

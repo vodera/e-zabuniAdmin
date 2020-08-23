@@ -504,6 +504,13 @@ app.config(function ($routeProvider, $locationProvider, IdleProvider, KeepaliveP
             // $rootScope.$on("$routeChangeStart", function (event, next, current) {
             //     Idle.watch();
             // });
+
+            // AUTHENTICATOR
+            if ($window.localStorage['loggedIn'] === "true") {
+                $window.localStorage['redirect'] = "dashboard";
+            } else if ($window.localStorage['loggedIn'] === "false") {
+                $window.location = "login.html";
+            }
         })
 
 /**
@@ -703,15 +710,16 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
         /* END DATE PICKER FUNCTIONS */
 
         $scope.doLogout = function () {
-            DataService.logout().then(function (response) {
+            // DataService.logout().then(function (response) {
                 $window.localStorage.clear();
+                $window.localStorage['loggedIn'] = "false";
                 $window.location = 'login.html';
                 $window.reload();
-            }, function (error) {
-                $window.localStorage.clear();
-                $window.location = 'login.html';
-                $window.reload();
-            });
+            // }, function (error) {
+            //     $window.localStorage.clear();
+            //     $window.location = 'login.html';
+            //     $window.reload();
+            // });
         };
         $rootScope.exportReport = function (data, format, reportName) {
             var uri, link;
