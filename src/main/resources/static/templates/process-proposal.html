@@ -1,0 +1,103 @@
+<section class="content">
+    <!-- START BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="">Process Tender</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav custom-nav nav-pills nav-wizard">
+                    <li ng-class="{'active': CurrentStep === 1}"><a ng-class="{'disabled': CurrentStep < 1}" href="none" data-toggle="tab" ng-click="CurrentStep > 1 && navigatetoTab(1)">Head of Department</a></li>
+                    <li ng-class="{'active': CurrentStep === 2}"><a ng-class="{'disabled': (CurrentStep < 2 && HighestLevel < 2)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 2 || HighestLevel >= 2) && navigatetoTab(2))">Finance Office</a></li>
+                    <li ng-class="{'active': CurrentStep === 3}"><a ng-class="{'disabled': (CurrentStep < 3 && HighestLevel < 3)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 3 || HighestLevel >= 3) && navigatetoTab(3))">Head of Finance</a></li>
+                    <li ng-class="{'active': CurrentStep === 4}"><a ng-class="{'disabled': (CurrentStep < 4 && HighestLevel < 4)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 4 || HighestLevel >= 4) && navigatetoTab(4))">Accounting Officer</a></li>
+                    <li ng-class="{'active': CurrentStep === 5}"><a ng-class="{'disabled': (CurrentStep < 5 && HighestLevel < 5)}" href="none" data-toggle="tab" ng-click="((CurrentStep > 5 || HighestLevel >= 5) && navigatetoTab(5))">Procurement Office</a></li>
+                </ul>
+                <div class="tab-content" ng-show="CurrentStep === 1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><span class="fa fa-folder-open"></span><strong>       REHABILITATION WORKS OF MBWALENI WATER PAN </strong></h4>
+                        </div>
+                        <div class="panel-body">
+                            <div id="datatable_wrapper" class="">
+                                <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                                    <thead>
+                                    <tr>
+                                        <th class="sorting col-centered">No</th>
+                                        <th class="sorting">Tender Title</th>
+                                        <th class="sorting">Entity Name</th>
+                                        <th class="sorting col-left">Reference Number</th>
+                                        <th class="sorting">View Tender Request</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="Tender in Tenders track by $index">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{Tender.TenderTitle}}</td>
+                                        <td>{{Tender.EntityName}}</td>
+                                        <td>{{Tender.ReferenceNo}}</td>
+                                        <td><button class="btn btn-danger btn-xs" ng-click="viewTenderRequest(Tender)"><i class="fa "></i> VIEW </button></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div ng-include src="'templates/table-footer.html'"></div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><span class="fa fa-user"></span><strong> Upload Report</strong></h4>
+                                </div>
+                                <div class="panel-body">
+                                    <form name="TenderView" class="form-horizontal">
+                                        <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                                            <thead>
+                                            <tr>
+
+                                                <th class="sorting">Upload Document</th>
+                                                <th class="sorting">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td> Report</td>
+                                                <td>
+                                                    <div class="btn-group pull-left">
+                                                        <input type="file" id="myFile" name="filename">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-danger" ng-click="decline()"><i class="fa fa-chevron-right"></i> DECLINE</button>
+                                    <button class="btn btn-secondary" ng-click="proceedNextStep()"><i class="fa fa-chevron-right"></i> APPROVE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="CurrentStep === 2">
+                    <div  ng-include src="'templates/finance-office.html'" flex></div>
+                </div>
+                <div ng-if="CurrentStep === 3">
+                    <div  ng-include src="'templates/head-of-finance.html'" flex></div>
+                </div>
+                <div ng-if="CurrentStep === 4">
+                    <div  ng-include src="'templates/accounting-officer.html'" flex></div>
+                </div>
+                <div ng-if="CurrentStep === 5">
+                    <div  ng-include src="'templates/procurement-office.html'" flex></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT WRAPPER -->
+</section>

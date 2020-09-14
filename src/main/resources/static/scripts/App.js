@@ -38,6 +38,27 @@ app.config(function ($routeProvider, $locationProvider, IdleProvider, KeepaliveP
                 isAuthenticated: true,
                 permission: 'ONBOARD_PRINCIPAL_CUSTOMER'
             })
+            .when('/CreateProposal', {
+                url: "/CreateProposal",
+                templateUrl: 'templates/create-proposal.html',
+                controller: 'CreateProposalCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
+            .when('/ProcessProposal', {
+                url: "/ProcessProposal",
+                templateUrl: 'templates/process-proposal.html',
+                controller: 'ProcessProposalCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
+            .when('/ProposalList', {
+                url: "/ProposalList",
+                templateUrl: 'templates/proposal-list.html',
+                controller: 'ProposalListCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
             .when('/TenderList', {
                 url: "/TenderList",
                 templateUrl: 'templates/tender-list.html',
@@ -49,6 +70,13 @@ app.config(function ($routeProvider, $locationProvider, IdleProvider, KeepaliveP
                 url: "/ProcessTender",
                 templateUrl: 'templates/process-tender.html',
                 controller: 'ProcessTenderCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
+            .when('/ViewTenderRequest', {
+                url: "/ViewTenderRequest",
+                templateUrl: 'templates/view-tender-request.html',
+                controller: 'ViewTenderRequestCtrl',
                 isAuthenticated: true,
                 permission: ''
             })
@@ -779,7 +807,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
             ]
 
             $scope.Tenders =
-                [{  TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER",
+                [{  TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN",
                     TenderType: "Open Tender",
                     EntityName:"National Irrigation Board",
                     ApplicationFee: "0",
@@ -794,15 +822,15 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                     OpeningTime:"12:00:00",
                     OtherDetails:"TENDER  FOR REHABILITATION WORKS OF MBWALENI WATER PAN  PROJECT IN  KWALE COUNTY"
                 },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Closed Tender", EntityName:"National Irrigation Board", ApplicationFee: "2000", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Restricted Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed" },
-                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Closed Tender", EntityName:"National Irrigation Board", ApplicationFee: "2000", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Restricted Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published" },
                 ];
 
             $scope.ViewTender = function(Tender){
@@ -827,6 +855,481 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
             }
 
         }])
+
+    .controller('ProcessProposalCtrl', ['$rootScope', '$scope', 'DataService', '$localStorage', '$window', '$filter', function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
+
+
+        $scope.Tenders =
+            [{  TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER PAN",
+                TenderType: "Open Tender",
+                EntityName:"National Irrigation Board",
+                ApplicationFee: "0",
+                PublishDate: "25th-July-2020",
+                CloseDate: "25th-Aug-2020",
+                ReferenceNo:"NIB/T/006/2018-2017",
+                Status: "Published",
+                EntityType:"State Corporation",
+                TenderCategory:"Works",
+                OpeningVenue:"Nile Basin Board Room,NIB,Lenana Road Hurlingham",
+                OpeningDate:"25th-Sep-2020",
+                OpeningTime:"12:00:00",
+                OtherDetails:"TENDER  FOR REHABILITATION WORKS OF MBWALENI WATER PAN  PROJECT IN  KWALE COUNTY",
+                stage: "opening",
+                brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya"
+
+            }];
+
+
+        $scope.decline = function (){
+            $rootScope.notify('warning', 'Declined', 'Tender request has been declined by Head of Department. E-mail notification has been sent to chain managers');
+        }
+
+
+
+        $scope.SubmittedTenders = [
+            {ApplicantReferenceNumber: "APPLICANT/T/2017/101", ReferenceNo: "NIB/T/006/2018-2017"},
+            {ApplicantReferenceNumber: "APPLICANT/T/2017/102", ReferenceNo: "NIB/T/006/2018-2017"},
+            {ApplicantReferenceNumber: "APPLICANT/T/2017/103", ReferenceNo: "NIB/T/006/2018-2017"},
+            {ApplicantReferenceNumber: "APPLICANT/T/2017/104", ReferenceNo: "NIB/T/006/2018-2017"},
+        ];
+
+        $scope.Notifications =
+            [
+                {notification: "NO", companyName: "Turubini Limited", ApplicantReferenceNumber: "APPLICANT/T/2017/101",},
+                {notification: "NO", companyName: "QWERTY Solutions", ApplicantReferenceNumber: "APPLICANT/T/2017/102",},
+                {notification: "YES", companyName: "ATRIA Group Limited", ApplicantReferenceNumber: "APPLICANT/T/2017/103",},
+                {notification: "NO", companyName: "Microsoft Solutions", ApplicantReferenceNumber: "APPLICANT/T/2017/104",}]
+
+        $scope.process = function (){
+            $scope.Payment = true;
+        }
+
+
+        $scope.LinkCustAcc = {search: ''};
+        $scope.BankCustomer = {search: ''};
+        $scope.searchPrincipal = function (clear) {
+
+            if (clear) {
+                $dialogConfirm("Please note that all the data captured so far will be cleared. Are you sure that you want to clear?").then(function () {
+                    $scope.BankCustomer = {search: ''};
+                    $scope.clearCustomer(false);
+                }, function () {
+                    return;
+                });
+            } else {
+                if (!$scope.BankCustomer.search) {
+                    return;
+                }
+                if ($scope.PrincipalCustomer.CustomerOutlets.length > 0) {
+                    $dialogConfirm("Please note that by searching again all the data captured so far will be cleared! Do you want to continue?").then(function () {
+                        $scope.searchAccount(true);
+                    }, function () {
+                        return;
+                    });
+                } else {
+                    $scope.searchAccount(true);
+                }
+            }
+        };
+
+        $scope.searchAccount = function (isPrincipal) {
+            var searchInput = '';
+            $scope.isPrincipal = isPrincipal;
+            if ($scope.isPrincipal) {
+                searchInput = $scope.BankCustomer.search;
+            } else {
+                if (!$scope.LinkAccForm.$valid) {
+                    return;
+                }
+                searchInput = $scope.LinkCustAcc.search;
+            }
+
+            $scope.progressBar = $rootScope.showProgress();
+            DataService.getSearchCustAccount(searchInput).then(function (response) {
+                console.log("Resp:", angular.toJson(response.data.data));
+                $scope.progressBar.close();
+                /* Remember to check for account not found && Duplicate accounts*/
+                if (response.data.data) {
+                    $scope.LinkCustAcc = response.data.data;
+                    $scope.LinkCustAcc.search = searchInput;
+                    if ($scope.isPrincipal) {
+                        $scope.ShowLinkAcc = true;
+                    }
+                } else {
+                    $rootScope.notify('info', 'Information', 'Account not found');
+                }
+            }, function (error) {
+                console.log("Error", error);
+                $scope.progressBar.close();
+                if (error.status === -1) {
+                    $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                } else if (error.status === 401) {
+                    $rootScope.expiredToken();
+                } else if (error.status === 403) {
+                    $rootScope.notify('error', 'Error', error.data.message);
+                    $window.location = '#/Error';
+                } else {
+                    $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message);
+                }
+            });
+        };
+        $scope.principalAccountOK = function () {
+            if ($scope.LinkCustAcc.hasOwnProperty('accountNumber')) {
+                $scope.clearCustomer(false); //Reset principal
+                $scope.PrincipalCustomer.customerName = $scope.LinkCustAcc.accountName;
+                $scope.PrincipalCustomer.postalAddress = $scope.LinkCustAcc.postalAddress ? $scope.LinkCustAcc.postalAddress : 'N/A';
+                $scope.CustomerAccounts.push($scope.LinkCustAcc);
+                $scope.closeAndclear();
+            }
+        };
+        $scope.addOutlet = function () {
+            if (!$scope.OutletForm.$valid) {
+                return;
+            }
+
+            $scope.CustOutlet.outletName = $filter('sentenceCase')($scope.CustOutlet.outletName);
+            $scope.CustOutlet.physicalAddress = $filter('sentenceCase')($scope.CustOutlet.physicalAddress);
+            var outletAccounts = [];
+            for (var i = 0; i < $scope.CustomerAccounts.length; i++) {
+                if ($scope.CustomerAccounts[i].isChecked) {
+                    outletAccounts.push($scope.CustomerAccounts[i]);
+                }
+            }
+            $scope.CustOutlet.accounts = outletAccounts;
+            if (outletAccounts.length < 1) {
+                $scope.checkAccountError = true;
+                return;
+            }
+
+            if (!$scope.CustOutlet.hasOwnProperty('outletId')) {
+                var OutletContacts = [];
+                $scope.CustOutlet.OutletContacts = OutletContacts;
+                $scope.CustOutlet.outletId = $scope.CustomerOutlets.length + 1;
+                $scope.CustomerOutlets.push($scope.CustOutlet);
+            }
+            $scope.closeAndclear(true);
+        };
+        $scope.editOutlet = function (index) {
+            $scope.CustOutlet = $scope.CustomerOutlets[index];
+            $scope.OrigCustOutlet = angular.copy($scope.CustOutlet);
+            $scope.OrigCustOutlet.index = index;
+            for (var i = 0; i < $scope.CustomerAccounts.length; i++) {
+                console.log("Account Exists:", $scope.CustOutlet.accounts.map(function (e) {
+                    return e.accountNumber;
+                }).indexOf($scope.CustomerAccounts[i].accountNumber));
+                $scope.CustomerAccounts[i].isChecked = $scope.CustOutlet.accounts.map(function (e) {
+                    return e.accountNumber;
+                }).indexOf($scope.CustomerAccounts[i].accountNumber) > -1 ? true : false;
+            }
+            $scope.showDlg();
+        };
+        $scope.addContact = function () {
+            if (!$scope.OutletContactForm.$valid) {
+                return;
+            }
+
+            $scope.OutletContact.fullName = $filter('sentenceCase')($scope.OutletContact.fullName);
+            //$scope.OutletContact.msisdn = (/^07/.test($scope.OutletContact.msisdn)) ? "2547"+$scope.OutletContact.msisdn.substring(1) : $scope.OutletContact.msisdn;
+            var contactAccounts = [];
+            for (var i = 0; i < $scope.CustOutlet.accounts.length; i++) {
+                if ($scope.CustOutlet.accounts[i].isChecked) {
+                    contactAccounts.push($scope.CustOutlet.accounts[i]);
+                }
+            }
+            if (contactAccounts.length < 1) {
+                $scope.checkAccountError = true;
+                return;
+            }
+            $scope.OutletContact.accounts = contactAccounts;
+            if (!$scope.OutletContact.hasOwnProperty('contactId')) {
+                $scope.OutletContact.contactId = $scope.CustOutlet.OutletContacts.length + 1;
+                $scope.CustOutlet.OutletContacts.push($scope.OutletContact);
+            }
+            $scope.closeAndclear(true);
+        };
+        $scope.editOutletContact = function (index, parentIndex) {
+            $scope.CustOutlet = $scope.CustomerOutlets[parentIndex];
+            $scope.OutletContact = $scope.CustOutlet.OutletContacts[index];
+            $scope.OrigOutletContact = angular.copy($scope.OutletContact);
+            $scope.OrigOutletContact.index = index;
+            for (var i = 0; i < $scope.CustOutlet.accounts.length; i++) {
+                $scope.CustOutlet.accounts[i].isChecked = $scope.OutletContact.accounts.map(function (e) {
+                    return e.accountNumber;
+                }).indexOf($scope.CustOutlet.accounts[i].accountNumber) > -1 ? true : false;
+            }
+            $scope.showDlg($scope.CustOutlet);
+        };
+        $scope.linkAccount = function () {
+            if ($scope.LinkCustAcc.hasOwnProperty('accountNumber')) {
+                if ($scope.CustomerAccounts.map(function (e) {
+                    return e.accountNumber;
+                }).indexOf($scope.LinkCustAcc.accountNumber) > -1) {
+                    $rootScope.notify('error', 'Error', 'This account already exists!');
+                } else {
+                    $scope.CustomerAccounts.push($scope.LinkCustAcc);
+                }
+                $scope.closeAndclear();
+            }
+        };
+        $scope.removeItem = function (index, parentIndex) {
+            switch ($scope.CurrentStep) {
+                case 1:
+                    if ($scope.CustomerOutlets.length > 0) {//Remove Account on Outlets
+                        for (var i = 0; i < $scope.CustomerOutlets.length; i++) {
+                            var accIndex = $scope.CustomerOutlets[i].accounts.map(function (e) {
+                                return e.accountNumber;
+                            }).indexOf($scope.CustomerAccounts[index].accountNumber);
+                            if (accIndex > -1) {
+                                $scope.CustomerOutlets[i].accounts.splice(accIndex, 1);
+                                if ($scope.CustomerOutlets[i].OutletContacts.length > 0) {//Remove Outlet Account on Contacts
+                                    for (var j = 0; j < $scope.CustomerOutlets[i].OutletContacts.length; j++) {
+                                        var contactAccIndex = $scope.CustomerOutlets[i].OutletContacts[j].accounts.map(function (e) {
+                                            return e.accountNumber;
+                                        }).indexOf($scope.CustomerAccounts[index].accountNumber);
+                                        if (contactAccIndex > -1) {
+                                            $scope.CustomerOutlets[i].OutletContacts[j].accounts.splice(contactAccIndex, 1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    $scope.CustomerAccounts.splice(index, 1);
+                    break;
+                case 2:
+                    $scope.CustomerOutlets.splice(index, 1);
+                    break;
+                case 3:
+                    $scope.CustomerOutlets[parentIndex].OutletContacts.splice(index, 1);
+                    break;
+            }
+        };
+        $scope.showDlg = function (CustOutlet) {
+            switch ($scope.CurrentStep) {
+                case 1:
+                    $scope.ShowLinkAcc = true;
+                    $scope.isPrincipal = false;
+                    break;
+                case 2:
+                    $scope.ShowOutlet = true;
+                    $scope.checkAccountError = false;
+                    break;
+                case 3:
+                    $scope.ShowContact = true;
+                    $scope.CustOutlet = CustOutlet;
+                    $scope.checkAccountError = false;
+                    break;
+            }
+        };
+        $scope.closeAndclear = function (recordSaved) {
+            switch ($scope.CurrentStep) {
+                case 1:
+                    $scope.ShowLinkAcc = false;
+                    $scope.LinkCustAcc = {};
+                    break;
+                case 2:
+                    $scope.ShowOutlet = false;
+                    if (!recordSaved && $scope.OrigCustOutlet) {
+                        var index = $scope.OrigCustOutlet.index;
+                        delete $scope.OrigCustOutlet.index;
+                        $scope.CustomerOutlets.push($scope.OrigCustOutlet);
+                        $scope.CustomerOutlets.splice(index, 1);
+                    }
+                    delete $scope.OrigCustOutlet;
+                    $scope.CustOutlet = {};
+                    for (var i = 0; i < $scope.CustomerAccounts.length; i++) {
+                        $scope.CustomerAccounts[i].isChecked = false;
+                    }
+                    break;
+                case 3:
+                    $scope.ShowContact = false;
+                    if (!recordSaved && $scope.OrigOutletContact) {
+                        var index = $scope.OrigOutletContact.index;
+                        delete $scope.OrigOutletContact.index;
+                        $scope.CustOutlet.OutletContacts.push($scope.OrigOutletContact);
+                        $scope.CustOutlet.OutletContacts.splice(index, 1);
+                    }
+                    delete $scope.OrigOutletContact;
+                    $scope.OutletContact = {};
+                    for (var i = 0; i < $scope.CustOutlet.accounts.length; i++) {
+                        $scope.CustOutlet.accounts[i].isChecked = false;
+                    }
+                    break;
+            }
+        };
+        $scope.proceedNextStep = function () {
+
+            switch ($scope.CurrentStep) {
+                case 1:
+
+                    $rootScope.notify('success', 'Success', 'Tender request has been approved by Head of Department. E-mail notification has been sent to chain managers');
+
+                    break;
+                case 2:
+                    $rootScope.notify('success', 'Success', 'Tender request has been approved by Finance Office. E-mail notification has been sent to chain managers');
+
+                    break;
+                case 3:
+                    $rootScope.notify('success', 'Success', 'Tender request has been approved by Head of Department. E-mail notification has been sent to chain managers');
+
+                    break;
+                case 4:
+                    $rootScope.notify('success', 'Success', 'Tender request has been approved by Accounting Officer. E-mail notification has been sent to chain managers');
+
+                    break;
+                case 5:
+                    $window.location='#/CreateTender'
+                    $rootScope.notify('success', 'Success', 'Tender request approved for tendering. Email notification has been sent to chain managers');
+
+                    break;
+            }
+            $scope.CurrentStep += 1;
+            $scope.HighestLevel = $scope.HighestLevel > $scope.CurrentStep ? $scope.HighestLevel : $scope.CurrentStep;
+            $scope.PrincipalCustomer.CurrentStep = $scope.CurrentStep;
+            $scope.PrincipalCustomer.HighestLevel = $scope.HighestLevel;
+            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+            $window.scrollTo(0, 0);
+        };
+        $scope.navigatePreviousStep = function () {
+            $scope.CurrentStep -= 1;
+            $scope.PrincipalCustomer.CurrentStep = $scope.CurrentStep;
+            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+            $window.scrollTo(0, 0);
+        };
+        $scope.navigatetoTab = function (tabId) {
+            console.log("Navigate to:", tabId);
+            $scope.CurrentStep = tabId;
+            $scope.PrincipalCustomer.CurrentStep = $scope.CurrentStep;
+            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+            $window.scrollTo(0, 0);
+        };
+        $scope.saveCustomer = function () {
+            $scope.Customer = {};
+            $scope.Customer.customerName = $scope.PrincipalCustomer.customerName;
+            $scope.Customer.postalAddress = $scope.PrincipalCustomer.postalAddress;
+            $scope.Customer.physicalAddress = $scope.PrincipalCustomer.physicalAddress;
+            $scope.Customer.custCategoryId = $scope.PrincipalCustomer.custCategoryId;
+            $scope.Customer.accountReference = [];
+            angular.forEach($scope.PrincipalCustomer.CustomerAccounts, function (value, key) {
+                $scope.Customer.accountReference.push(value.accountNumber);
+            });
+            $scope.Customer.outlets = [];
+            angular.forEach($scope.PrincipalCustomer.CustomerOutlets, function (value, key) {
+                var outlet = {};
+                outlet.outletName = value.outletName;
+                outlet.physicalAddress = value.physicalAddress;
+                outlet.accountRefs = [];
+                angular.forEach(value.accounts, function (value, key) {
+                    outlet.accountRefs.push(value.accountNumber);
+                });
+                outlet.contacts = [];
+                angular.forEach(value.OutletContacts, function (value, key) {
+                    var outletContact = {};
+                    outletContact.contactEmail = value.emailAddress;
+                    outletContact.accountRefs = [];
+                    angular.forEach(value.accounts, function (value, key) {
+                        outletContact.accountRefs.push(value.accountNumber);
+                    });
+                    outlet.contacts.push(outletContact);
+                });
+                $scope.Customer.outlets.push(outlet);
+            });
+            $scope.Customer.contacts = [];
+            angular.forEach($scope.PrincipalCustomer.CustomerContacts, function (value, key) {
+                var contact = {};
+                contact.fullName = value.fullName;
+                contact.emailAddress = value.emailAddress;
+                contact.msisdn = value.msisdn;
+                $scope.Customer.contacts.push(contact);
+            });
+            console.log("Final Customer:", angular.toJson($scope.Customer));
+            $scope.progressBar = $rootScope.showProgress();
+            DataService.savePrincipalCustomer($scope.Customer).then(function (response) {
+                console.log("Customer Onboarding resp:", response.data.data);
+                $scope.progressBar.close();
+                $scope.PrincipalCustomer = {};
+                delete $localStorage.CustOnboarding;
+                $rootScope.notify('success', 'Success', "Customer On-boarding successfully completed.");
+                $window.location = '#/Customers';
+            }, function (error) {
+                console.log("Error", error);
+                $scope.progressBar.close();
+                if (error.status === -1) {
+                    $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                } else if (error.status === 401) {
+                    $rootScope.expiredToken();
+                } else if (error.status === 403) {
+                    $rootScope.notify('error', 'Error', error.data.message);
+                    $window.location = '#/Error';
+                } else {
+                    var errors = "";
+                    if (error.data.data) {
+                        errors = " [";
+                        angular.forEach(error.data.data, function (value, key) {
+                            errors = errors + value + ",";
+                        });
+                        errors = errors + "]";
+                    }
+                    $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message + errors);
+                }
+            });
+        };
+        $scope.loadCustomerCategories = function () {
+            $scope.progressBar = $rootScope.showProgress();
+            DataService.getCustomerCategories(true, ["Approved", "Rejected"]).then(function (response) {
+                console.log("Resp:", response.data.data.content);
+                $scope.CustomerCategories = response.data.data.content;
+                $scope.progressBar.close();
+            }, function (error) {
+                console.log("Error", error);
+                $scope.progressBar.close();
+                if (error.status === -1) {
+                    $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                } else if (error.status === 401) {
+                    $rootScope.expiredToken();
+                } else if (error.status === 403) {
+                    $rootScope.notify('error', 'Error', error.data.message);
+                    $window.location = '#/Error';
+                } else {
+                    $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message);
+                }
+            });
+        };
+        $scope.clearCustomer = function (reloadCategories) {
+            $scope.CustomerAccounts = [];
+            $scope.CustomerOutlets = [];
+            $scope.CustomerContacts = [];
+            $scope.PrincipalCustomer = {};
+            $scope.PrincipalCustomer.customerName = null;
+            $scope.PrincipalCustomer.postalAddress = null;
+            $scope.PrincipalCustomer.physicalAddress = null;
+            $scope.PrincipalCustomer.custCategoryId = null;
+            $scope.PrincipalCustomer.CustomerAccounts = $scope.CustomerAccounts;
+            $scope.PrincipalCustomer.CustomerOutlets = $scope.CustomerOutlets;
+            $scope.PrincipalCustomer.CustomerContacts = $scope.CustomerContacts;
+            $scope.CurrentStep = 1;
+            $scope.HighestLevel = 1;
+            $scope.PrincipalCustomer.CurrentStep = $scope.CurrentStep;
+            if (reloadCategories) {
+                $scope.loadCustomerCategories();
+            }
+            $scope.PrincipalCustomer.CustomerCategories = $scope.CustomerCategories;
+            $localStorage.CustOnboarding = $scope.PrincipalCustomer;
+        };
+        if (!$localStorage.hasOwnProperty('CustOnboarding')) { //If starting customer onboarding
+            $scope.clearCustomer(true);
+        } else {
+            console.log("$localStorage.CustOnboarding", $localStorage.CustOnboarding);
+            $scope.PrincipalCustomer = $localStorage.CustOnboarding;
+            $scope.CustomerAccounts = $scope.PrincipalCustomer.CustomerAccounts;
+            $scope.CustomerOutlets = $scope.PrincipalCustomer.CustomerOutlets;
+            $scope.CustomerContacts = $scope.PrincipalCustomer.CustomerContacts;
+            $scope.CurrentStep = $scope.PrincipalCustomer.CurrentStep;
+            $scope.HighestLevel = $scope.PrincipalCustomer.HighestLevel;
+            $scope.loadCustomerCategories();
+        }
+    }])
 
     .controller('ProcessTenderCtrl', ['$rootScope', '$scope', 'DataService', '$localStorage', '$window', '$filter', function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
 
@@ -1700,6 +2203,82 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 };
                 $scope.resetFilter();
             }])
+
+
+
+
+    .controller('ProposalListCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
+
+        $scope.chatBox = function (){
+            $scope.chat = true;
+        }
+        $scope.processProposal = function (Tender){
+            $window.location='#/ProcessProposal'
+        }
+
+
+        $scope.Notifications =
+            [
+                {notification: "NO", companyName: "Turubini Limited"},
+                {notification: "NO", companyName: "QWERTY Solutions"},
+                {notification: "YES", companyName: "ATRIA Group Limited"},
+                {notification: "NO", companyName: "Microsoft Solutions"}]
+
+        $scope.ViewTender = function (Tender, editMode){
+            $scope.ShowTenderView = true;
+        };
+
+
+        $scope.ShowUserView = false;
+        $scope.SystemUserForm = false;
+        $scope.CurrentTab = 1;
+        $scope.resetUsersFilter = function () {
+            $scope.UserFilter = {};
+            var startDate = new Date();
+            startDate.setDate(1);
+            $scope.UserFilter.dateFrom = startDate;
+            $scope.UserFilter.dateTo = new Date();
+            $scope.listUsers();
+        };
+
+        $scope.Tenders =
+            [{  TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER",
+                TenderType: "Open Tender",
+                EntityName:"National Irrigation Board",
+                ApplicationFee: "0",
+                PublishDate: "25th-July-2020",
+                CloseDate: "25th-Aug-2020",
+                ReferenceNo:"NIB/T/006/2018-2017",
+                Status: "Published",
+                EntityType:"State Corporation",
+                TenderCategory:"Works",
+                OpeningVenue:"Nile Basin Board Room,NIB,Lenana Road Hurlingham",
+                OpeningDate:"25th-Sep-2020",
+                OpeningTime:"12:00:00",
+                OtherDetails:"TENDER  FOR REHABILITATION WORKS OF MBWALENI WATER PAN  PROJECT IN  KWALE COUNTY",
+                stage: "opening",
+                brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya"
+
+            },
+                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Closed Tender", EntityName:"National Irrigation Board", ApplicationFee: "2000", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed", stage:"evaluation", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
+                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Restricted Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published", stage:"awarded", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
+                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed", stage:"contract", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
+                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published", stage:"lpo", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" }
+            ];
+
+        $scope.Notifications =
+            [
+                {notification: "NO", companyName: "Turubini Limited"},
+                {notification: "NO", companyName: "QWERTY Solutions"},
+                {notification: "YES", companyName: "ATRIA Group Limited"},
+                {notification: "NO", companyName: "Microsoft Solutions"}]
+
+        $scope.viewTenderRequest = function (Tender){
+            $scope.ShowTenderRequest = true;
+            $scope.Tender = Tender;
+        };
+    }])
+
 
     .controller('TenderListCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
 

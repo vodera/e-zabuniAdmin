@@ -1,0 +1,114 @@
+<div class="tab-content">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><span class="fa fa-folder-open"></span><strong>       REHABILITATION WORKS OF MBWALENI WATER PAN </strong></h4>
+        </div>
+        <div class="panel-body">
+            <div id="datatable_wrapper" class="">
+                <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                    <thead>
+                    <tr>
+                        <th class="sorting col-centered">No</th>
+                        <th class="sorting">Tender Title</th>
+                        <th class="sorting">Entity Name</th>
+                        <th class="sorting col-left">Reference Number</th>
+                        <th class="sorting">View Tender Request</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="Tender in Tenders track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{Tender.TenderTitle}}</td>
+                        <td>{{Tender.EntityName}}</td>
+                        <td>{{Tender.ReferenceNo}}</td>
+                        <td><button class="btn btn-danger btn-xs" ng-click="viewTenderRequest(Tender)"><i class="fa "></i> VIEW </button></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div ng-include src="'templates/table-footer.html'"></div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><span class="fa fa-user"></span><strong> View Head of Finance Report</strong></h4>
+                </div>
+                <div class="panel-body">
+                    <form name="TenderView" class="form-horizontal">
+                        <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                            <thead>
+                            <tr>
+                                <th class="sorting"> Uploaded by</th>
+                                <th class="sorting">Document Name</th>
+                                <th class="sorting">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Finance Office</td>
+                                <td><a href="" target="=_blank" style="color: #C0392B">FinanceOffice/006/2020.PDF</a></td>
+                                <td>
+                                    <div class="btn-group pull-left">
+                                        <button class="btn btn-danger btn-xs" ng-click="openTender()"><i class="fa fa-search-plus"></i> VIEW </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Head of Department</td>
+                                <td><a href="" target="=_blank" style="color: #C0392B">HeadOfDepartment/006/2020.PDF</a></td>
+                                <td>
+                                    <div class="btn-group pull-left">
+                                        <button class="btn btn-danger btn-xs" ng-click="openTender()"><i class="fa fa-search-plus"></i> VIEW </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Head of Finance</td>
+                                <td><a href="" target="=_blank" style="color: #C0392B">HeadOfFinance/006/2020.PDF</a></td>
+                                <td>
+                                    <div class="btn-group pull-left">
+                                        <button class="btn btn-danger btn-xs" ng-click="openTender()"><i class="fa fa-search-plus"></i> VIEW </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><span class="fa fa-user"></span><strong>   Upload Report</strong></h4>
+                </div>
+                <div class="panel-body">
+                    <form name="TenderView" class="form-horizontal">
+                        <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
+                            <thead>
+                            <tr>
+
+                                <th class="sorting">Upload Document</th>
+                                <th class="sorting">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td> Report</td>
+                                <td>
+                                    <div class="btn-group pull-left">
+                                        <input type="file" id="myFile" name="filename">
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-danger" ng-click="decline()"><i class="fa fa-chevron-right"></i> DECLINE</button>
+                    <button class="btn btn-secondary" ng-click="proceedNextStep()"><i class="fa fa-chevron-right"></i> APPROVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
