@@ -25,16 +25,12 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
                 return;
             }
 
-            
-//            var user = {};
-//            user['username'] = $scope.vm.username;
-//            user['password'] = $scope.vm.password;
 
             var formdata = new FormData();
             formdata.append("username", $scope.vm.username);
             formdata.append("password", $scope.vm.password);
 
-//                console.log("formdata", formdata)
+           console.log("formdata", formdata)
             $window.localStorage['username'] = $scope.vm.username;
             $rootScope.showLoading = true;
              DataService.login(formdata).then(function(response){ return response.json();})
@@ -55,7 +51,7 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
 //                                $scope.loginErrorMsg = response.message;
 
                             }
-                            
+
                         }
 
                     });
@@ -82,8 +78,8 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
 //                            $scope.showLoginErrorMsg = true;
 //                        }
 //                    });
-                  
-                  
+
+
 //                    .then(function (response) {
 //                        console.log("Logging response", response);
 //                        $rootScope.showLoading = false;
@@ -103,7 +99,7 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
 //                        }
 //                       $scope.showLoginErrorMsg = true;
 //                       }
-//               
+//
 //                    });
 
         };
@@ -161,7 +157,7 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
                 };
 //        var newpassword = document.getElementById("newpassword")
 //        , confirmpassword = document.getElementById("confirmpassword");
-//        
+//
 //        function validatePassword(){
 //            if(newpassword.value !== confirmpassword.value) {
 //              confirmpassword.setCustomValidity("Passwords Don't Match");

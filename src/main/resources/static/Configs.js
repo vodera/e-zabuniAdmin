@@ -11,10 +11,11 @@
 var version = "1.0";
 
 /* DEV ENV URL */
-//var urlBase = 'http://192.168.1.153:8081/cash-collection/';
+// var urlBase = 'http://192.168.1.153:8081/cash-collection/';
+var urlBase = 'http://localhost:8080';
 
 /* DEV ENV PUBLIC URL*/
-var urlBase = 'http://41.215.130.247:8081/cash-collection/';
+// var urlBase = 'http://41.215.130.247:8081/cash-collection/';
 
 /* BASIC AUTH CREDENTIALS */
 var basic_auth_enc = 'YmFua19jbGllbnQ6R2FiODQ5OCNrZGRvQC4=';

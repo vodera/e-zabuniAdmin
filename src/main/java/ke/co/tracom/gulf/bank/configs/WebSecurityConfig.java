@@ -104,7 +104,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/templates/award.html", "/templates/contract.html", "/templates/lpo.html", "/templates/tender-in-progress.html",
                         "/templates/payment.html", "/templates/create-proposal.html", "/templates/process-proposal.html", "/templates/proposal-list.html",
                         "/templates/view-tender-request.html", "/templates/finance-office.html", "/templates/head-of-finance.html", "/templates/accounting-officer.html",
-                        "/templates/procurement-office.html").permitAll()
+                        "/templates/procurement-office.html", "/templates/create-eauction.html", "/templates/published-eauction.html", "/templates/completed-eauction.html",
+                        "/templates/ongoing-eauction.html", "/templates/published-auction-view.html", "/templates/ongoing-auction-view.html",
+                        "/templates/completed-auction-view.html", "/templates/bidevaluation-view.html", "/templates/bidresults-view.html", "/templates/create-user.html").permitAll()
                 .antMatchers("/api/**").hasAnyRole("2", "1")
                 .anyRequest().authenticated()
                 .and()

@@ -63,44 +63,55 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
             }
         };
         $scope.doLogin = function () {
-            $window.location = "#/otp";
-//             if (!$scope.LoginForm.$valid) {
-//                 return;
-//             }
-//             $scope.showLoginErrorMsg = false;
-//             $rootScope.showLoading = true;
-//             var data = "username=" + $scope.vm.username + "&password=" + $scope.vm.password
-//                     + "&g-recaptcha-response=" + grecaptcha.getResponse();
-//             $window.localStorage['username'] = $scope.vm.username;
-//             DataService.login_(data).then(function (response) {
-//                 console.log("login response", response)
-//                 console.debug("Login response:", response.data.data);
-//                 $scope.loginSuccessMsg = response.message;
-//                 $window.localStorage['fullName'] = response.data.data.userInfo.fullName;
-//                 $scope.showLoginSuccessMsg = true;
-//                 $window.localStorage['flag'] = "isAuthenticated";
-// //                var expires_in = (new Date().getTime() / 1000) + response.data.data.timeout;
-// //                $window.localStorage['expiryTime'] = (expires_in * 1000);
+            // $window.location = "#/otp";
+            if (!$scope.LoginForm.$valid) {
+                return;
+            }
+            $scope.showLoginErrorMsg = false;
+            $rootScope.showLoading = true;
+            var data = {};
+            data.email = $scope.vm.username;
+            data.password = $scope.vm.password;
+            console.log ("data: "+ $scope.vm.username);
+                    // + "&g-recaptcha-response=" + grecaptcha.getResponse();
+            $window.localStorage['username'] = $scope.vm.username;
+            console.log("im here 1")
+            DataService.login(data).then(function (response) {
+                console.log("login response", response)
+                // console.debug("Login response:", response.data.data);
+                // $scope.loginSuccessMsg = response.message;
+                // $window.localStorage['fullName'] = response.data.data.userInfo.fullName;
+                // $scope.showLoginSuccessMsg = true;
+                $window.localStorage['flag'] = "isAuthenticated";
+                $window.localStorage['token'] = response.data.token;
+//                var expires_in = (new Date().getTime() / 1000) + response.data.data.timeout;
+//                $window.localStorage['expiryTime'] = (expires_in * 1000);
 //                 $window.localStorage['expiryTime'] = response.data.data.timeout;
 //                 $rootScope.showLoading = false;
 //                 $window.location = "#/otp";
-//
-//             }, function (error) {
-//                 console.log("error......", error.data);
-//                 if (error.data === null) {
-//                     $scope.loginErrorMsg = 'Please check your internet connection';
-//                 } else if (error.status === 400) {
-//                     $scope.loginErrorMsg = error.data.message;
-//                 } else if (error.status == 410) {
-//                     $scope.loginErrorMsg = 'Sorry password expired please change your passoword before you proceed';
-//                     $window.location = '#/changepassword';
-//                 } else {
-//                     $scope.loginErrorMsg = error.data.message;
-//                 }
-//                 grecaptcha.reset();
-//                 $scope.showLoginErrorMsg = true;
-//                 $rootScope.showLoading = false;
-//             });
+                $window.localStorage['loggedInUser'] = "true"
+                $window.localStorage['permissions'] = [];
+                $window.localStorage['userType'] = "Bank Admin";
+                $window.location = '/';
+                $window.localStorage['redirect'] = "dashboard";
+                $window.localStorage['loggedIn'] = "true";
+
+            }, function (error) {
+                console.log("error......", error.data);
+                if (error.data === null) {
+                    $scope.loginErrorMsg = 'Please check your internet connection';
+                } else if (error.status === 400) {
+                    $scope.loginErrorMsg = error.data.message;
+                } else if (error.status == 410) {
+                    $scope.loginErrorMsg = 'Sorry password expired please change your passoword before you proceed';
+                    $window.location = '#/changepassword';
+                } else {
+                    $scope.loginErrorMsg = error.data.message;
+                }
+                grecaptcha.reset();
+                $scope.showLoginErrorMsg = true;
+                $rootScope.showLoading = false;
+            });
         };
     }])
         .controller('ChangePasswordCtrl', ['$scope', '$rootScope', 'DataService', '$window', function ($scope, $rootScope, DataService, $window) {
@@ -285,29 +296,10 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
 
 loginAppp.service('DataService', ['$http', '$window', function ($http, $window) {
 
-        this.login = function (formdata) {
-
-//        return $http.post(urlBase + 'process-login', formdata,
-//        {
-//            headers: {
-//                'X-CSRF-TOKEN':  hValue,
-//                'Content-Type': 'multipart/form-data'}
-//        });
-
-
-            return fetch('process-login',
+        this.login = function (data) {
+            return $http.post('http://localhost:8080/api/users/login2', data,
                     {
-                        method: 'POST',
-                        headers: {'X-CSRF-TOKEN': hValue, 'Accept': 'Application/json'},
-                        body: formdata,
-                        credentials: 'include'
-                    });
-        };
-
-        this.login_ = function (urlencodedData) {
-            return $http.post('process-login', urlencodedData,
-                    {
-                        headers: {'X-CSRF-TOKEN': hValue, 'Content-Type': 'application/x-www-form-urlencoded'}
+                        headers: {'X-CSRF-TOKEN': hValue, 'Content-Type': 'Application/json'}
                     });
         };
 
@@ -407,11 +399,11 @@ loginAppp.directive('numbersOnly', function () {
 var version = "1.0";
 
 /* DEV ENV URL */
-var urlBase = '/';
+// var urlBase = '/';
 
 /* DEV ENV PUBLIC URL*/
 
-var urlBase = 'api/';
+// var urlBase = 'api/';
 
 /* SYSTEM IDLE TIMEOUT */
 var idleTimeout = 15 * 60; //In Seconds

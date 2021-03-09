@@ -59,6 +59,34 @@ app.config(function ($routeProvider, $locationProvider, IdleProvider, KeepaliveP
                 isAuthenticated: true,
                 permission: ''
             })
+            .when('/CreateAuction', {
+                url: "/CreateAuction",
+                templateUrl: 'templates/create-eauction.html',
+                controller: 'CreateAuctionCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
+            .when('/PublishedAuction', {
+                url: "/PublishedAuction",
+                templateUrl: 'templates/published-eauction.html',
+                controller: 'PublishedAuctionCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
+            .when('/OngoingAuction', {
+                url: "/OngoingAuction",
+                templateUrl: 'templates/ongoing-eauction.html',
+                controller: 'OngoingAuctionCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
+            .when('/CompletedAuction', {
+                url: "/CompletedAuction",
+                templateUrl: 'templates/completed-eauction.html',
+                controller: 'CompletedAuctionCtrl',
+                isAuthenticated: true,
+                permission: ''
+            })
             .when('/TenderList', {
                 url: "/TenderList",
                 templateUrl: 'templates/tender-list.html',
@@ -552,10 +580,10 @@ app.config(function ($routeProvider, $locationProvider, IdleProvider, KeepaliveP
 /* APP VERSION NUMBER */
 var version = "1.0";
 /* DEV ENV URL */
-var urlBase = '/';
+// var urlBase = '/';
 /* DEV ENV PUBLIC URL*/
 
-var urlBase = 'api/';
+var urlBase = 'http://localhost:8080/api/';
 
 var BaseURL = "https://xecdapi.xe.com/"
 /* SYSTEM IDLE TIMEOUT */
@@ -1798,6 +1826,152 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 $scope.loadCustomerCategories();
             }
     }])
+
+
+
+    .controller('PublishedAuctionCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
+            $scope.ShowPublishedAuction=false;
+
+
+        $scope.Auctions =
+            [
+                {ItemName: "2014 MERCEDES BENZ S 500", AuctionID:"PSGC56DHC", EntityName:"National Irrigations Board", BasePrice:"KSHS. 4,000,000", PublishDate:"2020-Nov-10", CloseDate:"2020-Dec-01", Status:"Published", SaleConditions:"1. Viewing can be done during normal working hours at the Ministry ware house located in\n" +
+                        "industrial area along Likoni road opposite NTSA to verify the details as these are not\n" +
+                        "warranted by the Auctioneers or the Ministry of  Water and Irrigation.\n" +
+                        "2. A refundable Banker’s Cheque of Kshs. 30,000.00 deposited in favor of the Principal Secretary,\n" +
+                        "Ministry of Water and Irrigation at the cash office on 2\n" +
+                        "nd Floor Old Treasury Building, Harambee\n" +
+                        "Avenue, Nairobi is a requirement for the bidders bidding for Lot 1 and Kshs. 10, 000 for all\n" +
+                        "other Motor vehicles and a non-refundable amount of Kshs.5,000.00 for assorted stores which\n" +
+                        "will be sold as one lot. Bidders are to obtain a bidding number from Cash office, on second\n" +
+                        "(2nd ) floor and should be received on or before Monday 24\n" +
+                        "th June, 2019 at 4.00 pm.\n" +
+                        "PLEASE NOTE THAT:\n" +
+                        "• THERE WILL BE NO BIDDING WHATSOEVER WITHOUT A BIDDING\n" +
+                        "NUMBER.\n" +
+                        "• THE BIDDING NUMBERS WILL BE ISSUED ON THE DAY OF AUCTION.\n" +
+                        "3. The declared purchaser must deposit 25% of the purchase price in cash or banker’s cheque in\n" +
+                        "favor of Principal Secretary, Ministry of Foreign Affairs, at the fall of the hammer and the\n" +
+                        "balance paid within seven (7) days from the auction date, failure to which the money received\n" +
+                        "including the deposit shall be forfeited.\n" +
+                        "4. Sales are subject to reserve prices and the duty status (if any)."},
+
+            ];
+
+
+        $scope.ViewPublishedAuction = function(Auction){
+            $scope.ShowPublishedAuction = true;
+            $scope.Auction = Auction;
+        }
+    }])
+
+
+    .controller('OngoingAuctionCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
+        $scope.ShowOngoingAuction=false;
+        $scope.ShowBidEvaluation=false;
+
+
+        $scope.Auctions =
+            [
+                {ItemName: "2014 MERCEDES BENZ S 500", AuctionID:"PSGC56DHC", EntityName:"National Irrigations Board", BasePrice:"KSHS. 4,000,000", PublishDate:"2020-Nov-10", CloseDate:"2020-Dec-01", Status:"Published", SaleConditions:"1. Viewing can be done during normal working hours at the Ministry ware house located in\n" +
+                        "industrial area along Likoni road opposite NTSA to verify the details as these are not\n" +
+                        "warranted by the Auctioneers or the Ministry of  Water and Irrigation.\n" +
+                        "2. A refundable Banker’s Cheque of Kshs. 30,000.00 deposited in favor of the Principal Secretary,\n" +
+                        "Ministry of Water and Irrigation at the cash office on 2\n" +
+                        "nd Floor Old Treasury Building, Harambee\n" +
+                        "Avenue, Nairobi is a requirement for the bidders bidding for Lot 1 and Kshs. 10, 000 for all\n" +
+                        "other Motor vehicles and a non-refundable amount of Kshs.5,000.00 for assorted stores which\n" +
+                        "will be sold as one lot. Bidders are to obtain a bidding number from Cash office, on second\n" +
+                        "(2nd ) floor and should be received on or before Monday 24\n" +
+                        "th June, 2019 at 4.00 pm.\n" +
+                        "PLEASE NOTE THAT:\n" +
+                        "• THERE WILL BE NO BIDDING WHATSOEVER WITHOUT A BIDDING\n" +
+                        "NUMBER.\n" +
+                        "• THE BIDDING NUMBERS WILL BE ISSUED ON THE DAY OF AUCTION.\n" +
+                        "3. The declared purchaser must deposit 25% of the purchase price in cash or banker’s cheque in\n" +
+                        "favor of Principal Secretary, Ministry of Foreign Affairs, at the fall of the hammer and the\n" +
+                        "balance paid within seven (7) days from the auction date, failure to which the money received\n" +
+                        "including the deposit shall be forfeited.\n" +
+                        "4. Sales are subject to reserve prices and the duty status (if any)."},
+
+            ];
+
+
+        $scope.ViewOngoingAuction = function(Auction){
+            $scope.ShowOngoingAuction = true;
+            $scope.Auction = Auction;
+        }
+
+        $scope.BidEvaluation = function(){
+            $scope.ShowBidEvaluation=true;
+        }
+
+        $scope.Bids =
+            [
+                {BidderNumber: "QWEDSCFB/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,700,000", },
+                {BidderNumber: "HGBVDFRE/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,400,000", },
+                {BidderNumber: "OLJNBF35/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,210,000", },
+                {BidderNumber: "BHLK09KH/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,100,000", },
+                {BidderNumber: "BYFJKI78/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,000,000", },
+
+            ];
+
+
+    }])
+
+
+    .controller('CompletedAuctionCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
+        $scope.ShowCompletedAuction=false;
+
+
+        $scope.Auctions =
+            [
+                {ItemName: "2014 MERCEDES BENZ S 500", AuctionID:"PSGC56DHC", EntityName:"National Irrigations Board", BasePrice:"KSHS. 4,000,000", PublishDate:"2020-Nov-10", CloseDate:"2020-Dec-01", Status:"Published", SaleConditions:"1. Viewing can be done during normal working hours at the Ministry ware house located in\n" +
+                        "industrial area along Likoni road opposite NTSA to verify the details as these are not\n" +
+                        "warranted by the Auctioneers or the Ministry of  Water and Irrigation.\n" +
+                        "2. A refundable Banker’s Cheque of Kshs. 30,000.00 deposited in favor of the Principal Secretary,\n" +
+                        "Ministry of Water and Irrigation at the cash office on 2\n" +
+                        "nd Floor Old Treasury Building, Harambee\n" +
+                        "Avenue, Nairobi is a requirement for the bidders bidding for Lot 1 and Kshs. 10, 000 for all\n" +
+                        "other Motor vehicles and a non-refundable amount of Kshs.5,000.00 for assorted stores which\n" +
+                        "will be sold as one lot. Bidders are to obtain a bidding number from Cash office, on second\n" +
+                        "(2nd ) floor and should be received on or before Monday 24\n" +
+                        "th June, 2019 at 4.00 pm.\n" +
+                        "PLEASE NOTE THAT:\n" +
+                        "• THERE WILL BE NO BIDDING WHATSOEVER WITHOUT A BIDDING\n" +
+                        "NUMBER.\n" +
+                        "• THE BIDDING NUMBERS WILL BE ISSUED ON THE DAY OF AUCTION.\n" +
+                        "3. The declared purchaser must deposit 25% of the purchase price in cash or banker’s cheque in\n" +
+                        "favor of Principal Secretary, Ministry of Foreign Affairs, at the fall of the hammer and the\n" +
+                        "balance paid within seven (7) days from the auction date, failure to which the money received\n" +
+                        "including the deposit shall be forfeited.\n" +
+                        "4. Sales are subject to reserve prices and the duty status (if any)."},
+
+            ];
+
+
+        $scope.ViewCompletedAuction = function(Auction){
+            $scope.ShowCompletedAuction = true;
+            $scope.Auction = Auction;
+        }
+
+        $scope.BidResults = function(){
+            $scope.ShowBidResults = true;
+        }
+
+        $scope.BidReport =
+            [
+                {Result: "WON", BidderNumber: "QWEDSCFB/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,700,000", },
+                {Result: "LOST", BidderNumber: "HGBVDFRE/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,400,000", },
+                {Result: "LOST", BidderNumber: "OLJNBF35/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,210,000", },
+                {Result: "LOST", BidderNumber: "BHLK09KH/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,100,000", },
+                {Result: "LOST", BidderNumber: "BYFJKI78/BID/2020", EntityName:"National Irrigations Board", BasePrice:"4,000,000", Bid:"KSHS. 4,000,000", },
+
+            ];
+
+
+    }])
+
 
     .controller('CompletedTenderCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
 
@@ -7265,23 +7439,24 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 };
                 $scope.saveSystemUser = function () {
                     if (!$scope.CreateNewUser.$valid) {
+                        console.log($scope.SystemUser.dob)
                         return;
                     }
-                    var roleIds = [];
-                    angular.forEach($scope.UserRoles, function (userRole, key) {
-                        if (userRole.isChecked) {
-                            roleIds.push(userRole.roleId);
-                        }
-                    });
-                    console.log("role length", roleIds.length);
-                    if (roleIds.length < 1) {
-                        $rootScope.notify('warning', 'Warning', "Please select atleast one role");
-                        return;
-                    }
-                    $scope.SystemUser.roleIds = roleIds;
+                    // var roleIds = [];
+                    // angular.forEach($scope.UserRoles, function (userRole, key) {
+                    //     if (userRole.isChecked) {
+                    //         roleIds.push(userRole.roleId);
+                    //     }
+                    // });
+                    // console.log("role length", roleIds.length);
+                    // if (roleIds.length < 1) {
+                    //     $rootScope.notify('warning', 'Warning', "Please select atleast one role");
+                    //     return;
+                    // }
+                    // $scope.SystemUser.roleIds = roleIds;
                     $scope.progressBar = $rootScope.showProgress();
                     DataService.saveUser($scope.SystemUser).then(function (response) {
-                        console.log("User creation resp:", response.data.data);
+                        console.log("User creation resp:", response);
                         $scope.progressBar.close();
                         $rootScope.notify('success', 'Success', "System User successfully created.");
                         $window.location = '#/SystemUsers';
@@ -10582,12 +10757,12 @@ app.service('DataService', ['$localStorage', '$http', '$filter', function ($loca
         };
         this.saveUser = function (SystemUser) {
             if (SystemUser.userId !== undefined) {
-                return $http.put(urlBase + 'users?userIp=' + IP + '&userAgent=Browser/Application', SystemUser,
+                return $http.put(urlBase + 'users/register', SystemUser,
                         {
                             headers: {'X-CSRF-TOKEN': hValue}
                         });
             } else {
-                return $http.post(urlBase + 'users?userIp=' + IP + '&userAgent=Browser/Application', SystemUser,
+                return $http.post(urlBase + 'users/register', SystemUser,
                         {
                             headers: {'X-CSRF-TOKEN': hValue}
                         });

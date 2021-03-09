@@ -1,0 +1,143 @@
+<section class="content" >
+    <!-- START BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="">eAuction Module</li>
+        <li class="active">Create eAuction</li>
+    </ul>
+    <!-- END BREADCRUMB -->
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrap">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><span class="fa fa-user"></span><strong> eAuction Info</strong></h4>
+                <ul class="panel-controls">
+                    <li><a ng-click="" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <form name="CreateNewUser" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Item Name</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-edit"></span></span>
+                                        <input type="text" ng-model="SystemUser.fullName" class="form-control" name="fullnameText" placeholder="Enter item name" required>
+                                    </div>
+                                    <span class="help-block">Item Description Name</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Entity Name</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
+                                        <input type="email" required=""  ng-model="SystemUser.emailAddress" class="form-control" name="emailAddressText" placeholder="Enter entity name">
+                                    </div>
+                                    <span class="help-block">Entity Name</span>
+                                </div>
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-3 control-label text-left">Tender Opening Venue</label>-->
+<!--                                <div class="col-md-7">-->
+<!--                                    <div class="input-group has-feedback">-->
+<!--                                        <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>-->
+<!--                                        <input type="email" required=""  ng-model="SystemUser.emailAddress" class="form-control" name="emailAddressText" placeholder="Tender Opening Venue">-->
+<!--                                    </div>-->
+<!--                                    <span class="help-block">Opening Venue</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Disposal Opening Date and Time</label>
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="CashCollection.prefCollectionTime.date" is-open="dateTimePicker2.open" datepicker-options="CashCollection.prefCollectionTime.dateOptions" timepicker-options="CashCollection.prefCollectionTime.timepickerOptions" required=""/>
+                                        <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="dateTimePicker2.open = !dateTimePicker2.open"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    <button type="button" class="btn btn-secondary" ng-click="setCollectionToday()"><i class="fa fa-clock-o"></i> Today</button>
+                                                </span>
+                                    </p>
+                                    <span class="help-block">Disposal Opening Date and Time</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Upload Item Information</label>
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="file" id="myFile" name="filename">
+                                    </p>
+                                    <span class="help-block">Item Info</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Conditions for sale</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-edit"></span></span>
+                                        <textarea type="text" ng-model="SystemUser.fullName" class="form-control" name="fullnameText" placeholder="Enter auction info" required></textarea>
+                                    </div>
+                                    <span class="help-block">Auction Sale Conditions</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Auction Lot Number</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                        <input type="text" ng-model="SystemUser.msisdn" class="form-control" minlength="10" maxlength="10" name="msisdnText" placeholder="Enter auction number" numbers-Only required ng-pattern="/^[0][7][0-9]/">
+                                    </div>
+                                    <span class="help-block">Auction Lot Number</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Item Base Price</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
+                                        <input type="email" required=""  ng-model="SystemUser.emailAddress" class="form-control" name="emailAddressText" placeholder="Enter base price" numbers-Only>
+                                    </div>
+                                    <span class="help-block">Item Base Price</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Disposal Closing Date and Time</label>
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="CashCollection.prefCollectionTime.date" is-open="dateTimePicker2.open" datepicker-options="CashCollection.prefCollectionTime.dateOptions" timepicker-options="CashCollection.prefCollectionTime.timepickerOptions" required=""/>
+                                        <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" ng-click="dateTimePicker2.open = !dateTimePicker2.open"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                    <button type="button" class="btn btn-secondary" ng-click="setCollectionToday()"><i class="fa fa-clock-o"></i> Today</button>
+                                                </span>
+                                    </p>
+                                    <span class="help-block">Disposal Closing Date and Time</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Upload Item Images</label>
+                                <div class="col-md-6">
+                                    <p class="input-group">
+                                        <input type="file" id="myFile" name="filename">
+                                    </p>
+                                    <span class="help-block">Item Images</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-default" ng-click="viewUser(SystemUser, false)"><i class="fa fa-times-circle"></i> Cancel</button>
+                            <button class="btn btn-secondary" ng-click="saveSystemUser()"><i class="fa fa-check-square-o"></i> Publish Auction</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

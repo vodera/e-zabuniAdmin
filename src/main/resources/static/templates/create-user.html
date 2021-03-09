@@ -1,4 +1,4 @@
-<section class="content" >       
+<section class="content" >
     <!-- START BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="#">Home</a></li>
@@ -8,7 +8,7 @@
     <!-- END BREADCRUMB -->
 
     <!-- PAGE CONTENT WRAPPER -->
-    <div class="page-content-wrap"> 
+    <div class="page-content-wrap">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title"><span class="fa fa-user"></span><strong> System User Info</strong></h4>
@@ -16,47 +16,67 @@
                     <li><a ng-click="" class="panel-remove"><span class="fa fa-times"></span></a></li>
                 </ul>
             </div>
-            <div class="panel-body"> 
+            <div class="panel-body">
                 <form name="CreateNewUser" class="form-horizontal">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">User Type</label>
-                                <div class="col-md-7">                                            
+                                <label class="col-md-3 control-label text-left">Department</label>
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
-                                        <select data-ng-options="SystemUser.id as SystemUser.userType for SystemUser in UserTypes" data-ng-model="SystemUser.userTypeId" class="form-control" ng-change='userTypeChange(SystemUser.userTypeId)' required>
-                                            <option value="" ng-if="!SystemUser.userTypeId">Select User Type</option>
+                                        <select data-ng-options="SystemUser.id as SystemUser.userType for SystemUser in UserTypes" data-ng-model="SystemUser.departmendId" class="form-control" ng-change='userTypeChange(SystemUser.userTypeId)'>
+                                            <option value="" ng-if="!SystemUser.userTypeId">Select User Department</option>
                                         </select>
-                                    </div>                                            
-                                    <span class="help-block">System User Type</span>
+                                    </div>
+                                    <span class="help-block">System User Department</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">Full Name</label>
-                                <div class="col-md-7">                                            
+                                <label class="col-md-3 control-label text-left">First Name</label>
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-edit"></span></span>
-                                        <input type="text" ng-model="SystemUser.fullName" class="form-control" name="fullnameText" placeholder="Enter full name" required>
-                                    </div>                                            
-                                    <span class="help-block">User Full Name</span>
+                                        <input type="text" ng-model="SystemUser.firstName" class="form-control" name="firstnameText" placeholder="Enter first name" required>
+                                    </div>
+                                    <span class="help-block">User First Name</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">Phone Number</label>
-                                <div class="col-md-7">                                            
+                                <label class="col-md-3 control-label text-left">Middle Name</label>
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
-                                        <span class="input-group-addon"><span class="fa fa-phone"></span></span>
-                                        <input type="text" ng-model="SystemUser.msisdn" class="form-control" minlength="10" maxlength="10" name="msisdnText" placeholder="Enter phone number" numbers-Only required ng-pattern="/^[0][7][0-9]/">
-                                    </div>                                            
-                                    <span class="help-block">User Phone Number (National format e.g. 07xxxxxxxx)</span>
+                                        <span class="input-group-addon"><span class="fa fa-edit"></span></span>
+                                        <input type="text" ng-model="SystemUser.middleName" class="form-control" name="middlenameText" placeholder="Enter middle name">
+                                    </div>
+                                    <span class="help-block">User Middle Name</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Last Name</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-edit"></span></span>
+                                        <input type="text" ng-model="SystemUser.lastName" class="form-control" name="lastnameText" placeholder="Enter last name" required>
+                                    </div>
+                                    <span class="help-block">User Last Name</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Username</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-edit"></span></span>
+                                        <input type="text" ng-model="SystemUser.username" class="form-control" name="usernameText" placeholder="Enter last name" required>
+                                    </div>
+                                    <span class="help-block">User Username</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">   
+                        <div class="col-md-6">
                             <div ng-if="SystemUser.userTypeId === 4" class="form-group">
                                 <label class="col-md-3 control-label text-left">Principal Customer</label>
-                                <div class="col-md-7">                                            
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
                                         <div custom-select="PrincipalCustomer.customerId as PrincipalCustomer.customerName for PrincipalCustomer in searchCustomer($searchTerm)" custom-select-options="{ 'async': true }" ng-model="SystemUser.customerId" required>
@@ -65,89 +85,149 @@
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <span class="help-block">Principal Customer</span>
                                 </div>
                             </div>
                             <div ng-if="(SystemUser.userTypeId === 3 || SystemUser.userTypeId === 5)" class="form-group">
                                 <label class="col-md-3 control-label text-left">CIT Agent</label>
-                                <div class="col-md-7">                                            
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
                                         <select data-ng-options="CITAgent.citAgentId as CITAgent.citAgentName for CITAgent in CITAgents" data-ng-model="SystemUser.citAgentId" class="form-control" required>
                                             <option value="" ng-if="!SystemUser.citAgentId">Select CIT Agent</option>
                                         </select>
-                                    </div>                                    
+                                    </div>
                                     <span class="help-block">CIT Agent</span>
                                 </div>
-                            </div>  
+                            </div>
                             <div ng-if="SystemUser.userTypeId === 2" class="form-group">
                                 <label class="col-md-3 control-label text-left">Department</label>
-                                <div class="col-md-7">                                            
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
                                         <select data-ng-options="Department.departmentId as Department.departmentName for Department in Departments" data-ng-model="SystemUser.departmentId" class="form-control" required>
                                             <option value="" ng-if="!SystemUser.departmentId">Select Department</option>
                                         </select>
-                                    </div>                                    
+                                    </div>
                                     <span class="help-block">User department</span>
                                 </div>
-                            </div>  
+                            </div>
+
+
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-3 control-label text-left">Date of Birth</label>-->
+<!--                                <div class="col-md-6">-->
+<!--                                    <p class="input-group">-->
+<!--                                        <input type="text" class="form-control" datetime-picker="yyyy-MM-dd" ng-model="SystemUser.dob" is-open="dateTimePicker2.open" datepicker-options="CashCollection.prefCollectionTime.dateOptions" timepicker-options="CashCollection.prefCollectionTime.timepickerOptions" required=""/>-->
+<!--                                        <span class="input-group-btn">-->
+<!--                                                    <button type="button" class="btn btn-default" ng-click="dateTimePicker2.open = !dateTimePicker2.open"><i class="glyphicon glyphicon-calendar"></i></button>-->
+<!--                                                </span>-->
+<!--                                    </p>-->
+<!--                                    <span class="help-block">Enter user date of birth</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">Email Address</label>
-                                <div class="col-md-7">                                            
+                                <label class="col-md-3 control-label text-left">Date of Birth</label>
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
-                                        <input type="email" required=""  ng-model="SystemUser.emailAddress" class="form-control" name="emailAddressText" placeholder="Enter email address">
-                                    </div>                                            
+<!--                                        <input type="text" class="form-control" datetime-picker="yyyy-MM-dd" ng-model="SystemUser.dob" is-open="datePicker.open" required=""/>-->
+                                        <input type="date" required=""  ng-model="SystemUser.dob" class="form-control" name="dobText" placeholder="Enter date of birth">
+<!--                                        <span class="input-group-btn">-->
+<!--                                            <button type="button" class="btn btn-default" ng-click="datePicker.open = !datePicker.open"><i class="glyphicon glyphicon-calendar"></i></button>-->
+<!--                                        </span>-->
+                                    </div>
+                                    <span class="help-block">User Date of Birth</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Email Address</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-envelope-o"></span></span>
+                                        <input type="email" required=""  ng-model="SystemUser.email" class="form-control" name="emailAddressText" placeholder="Enter email address">
+                                    </div>
                                     <span class="help-block">User Email Address</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">Active Status</label>
-                                <div class="col-md-7">                                            
+                                <label class="col-md-3 control-label text-left">Phone Number</label>
+                                <div class="col-md-7">
                                     <div class="input-group has-feedback">
-                                        <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
-                                        <input type="text" ng-model="SystemUser.status" class="form-control" name="name" placeholder="User Status" readonly="">
-                                    </div>                                    
-                                    <span class="help-block">User Account Status</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 25px;">
-                        <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label text-left">User Role(s):</label>
-                            </div>
-                        </div>
-                    </div>                    
-                    <div class="row col-md-10">
-                        <div class="col-md-12">                            
-                            <div class="form-group">
-                                <label class="col-md-2 control-label text-left"></label>
-                                <div class="col-md-10"> 
-                                    <div class="checkbox-set">
-                                        <div class="form-group" ng-repeat="UserRole in UserRoles" ng-if="$index % 4 === 0">
-                                            <div class="col-md-3">                                    
-                                                <label class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index].isChecked"/> {{UserRoles[$index].roleName}}</label>
-                                            </div>
-                                            <div class="col-md-3">                                    
-                                                <label ng-if="UserRoles[$index + 1]" class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index+1].isChecked"/> {{UserRoles[$index+1].roleName}}</label>
-                                            </div>
-                                            <div class="col-md-3">                                    
-                                                <label ng-if="UserRoles[$index + 2]" class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index+2].isChecked"/> {{UserRoles[$index+2].roleName}}</label>
-                                            </div>
-                                            <div class="col-md-3">                                    
-                                                <label ng-if="UserRoles[$index + 3]" class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index+3].isChecked"/> {{UserRoles[$index+3].roleName}}</label>
-                                            </div>
-                                        </div>
+                                        <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                        <input type="text" ng-model="SystemUser.phoneNumber" class="form-control" minlength="10" maxlength="10" name="phonenumberText" placeholder="Enter phone number" numbers-Only required ng-pattern="/^[0][7][0-9]/">
                                     </div>
-                                    <span class="help-block">The Role(s) to assigned to this User</span>
+                                    <span class="help-block">User Phone Number (National format e.g. 07xxxxxxxx)</span>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">County</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                        <input type="text" ng-model="SystemUser.county" class="form-control" name="countyText" placeholder="Enter user county"required>
+                                    </div>
+                                    <span class="help-block">Enter County</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Password</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                        <input type="password" ng-model="SystemUser.password" class="form-control" name="passwordText" placeholder="Enter password"required>
+                                    </div>
+                                    <span class="help-block">Enter Password</span>
+                                </div>
+                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-3 control-label text-left">Active Status</label>-->
+<!--                                <div class="col-md-7">-->
+<!--                                    <div class="input-group has-feedback">-->
+<!--                                        <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>-->
+<!--                                        <input type="text" ng-model="SystemUser.status" class="form-control" name="name" placeholder="User Status" readonly="">-->
+<!--                                    </div>-->
+<!--                                    <span class="help-block">User Account Status</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                     </div>
+<!--                    <div class="row" style="margin-top: 25px;">-->
+<!--                        <div class="col-md-6">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-md-3 control-label text-left">User Role(s):</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="row col-md-10">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-2 control-label text-left"></label>-->
+<!--                                <div class="col-md-10">-->
+<!--                                    <div class="checkbox-set">-->
+<!--                                        <div class="form-group" ng-repeat="UserRole in UserRoles" ng-if="$index % 4 === 0">-->
+<!--                                            <div class="col-md-3">-->
+<!--                                                <label class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index].isChecked"/> {{UserRoles[$index].roleName}}</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-3">-->
+<!--                                                <label ng-if="UserRoles[$index + 1]" class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index+1].isChecked"/> {{UserRoles[$index+1].roleName}}</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-3">-->
+<!--                                                <label ng-if="UserRoles[$index + 2]" class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index+2].isChecked"/> {{UserRoles[$index+2].roleName}}</label>-->
+<!--                                            </div>-->
+<!--                                            <div class="col-md-3">-->
+<!--                                                <label ng-if="UserRoles[$index + 3]" class="check"><input type="checkbox" class="icheckbox" ng-model="UserRoles[$index+3].isChecked"/> {{UserRoles[$index+3].roleName}}</label>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <span class="help-block">The Role(s) to assigned to this User</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="panel-footer">
                         <div class="btn-group pull-right">
                             <button class="btn btn-default" ng-click="viewUser(SystemUser, false)"><i class="fa fa-times-circle"></i> Cancel</button>
