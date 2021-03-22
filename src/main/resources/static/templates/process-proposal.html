@@ -20,28 +20,30 @@
                 <div class="tab-content" ng-show="CurrentStep === 1">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><span class="fa fa-folder-open"></span><strong>       REHABILITATION WORKS OF MBWALENI WATER PAN </strong></h4>
+                            <h4 class="panel-title"><span class="fa fa-folder-open"></span><strong>       {{Proposal.tenderRequestName}}</strong></h4>
                         </div>
                         <div class="panel-body">
                             <div id="datatable_wrapper" class="">
                                 <table class="table datatable table-bordered table-condensed table-striped" col-resizeable>
                                     <thead>
                                     <tr>
-                                        <th class="sorting col-centered">No</th>
-                                        <th class="sorting">Tender Title</th>
+                                        <th class="sorting">Proposal Title</th>
                                         <th class="sorting">Entity Name</th>
-                                        <th class="sorting col-left">Reference Number</th>
-                                        <th class="sorting">View Tender Request</th>
+                                        <th class="sorting col-left">Proposal Brief</th>
+                                        <th class="sorting">Processing Stage</th>
+                                        <th class="sorting">Status</th>
+                                        <th class="sorting">Action</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="Tender in Tenders track by $index">
-                                        <td>{{$index + 1}}</td>
-                                        <td>{{Tender.TenderTitle}}</td>
-                                        <td>{{Tender.EntityName}}</td>
-                                        <td>{{Tender.ReferenceNo}}</td>
-                                        <td><button class="btn btn-danger btn-xs" ng-click="viewTenderRequest(Tender)"><i class="fa "></i> VIEW </button></td>
+                                    <tr ng-repeat="proposal in Proposal track by $index">
+                                        <td>{{proposal.tenderRequestName}}</td>
+                                        <td>{{proposal.entityName}}</td>
+                                        <td>{{proposal.tenderRequestBrief}}</td>
+                                        <td>{{proposal.processingStage}}</td>
+                                        <td>{{proposal.approvalStatus}}</td>
+                                        <td><button class="btn btn-default btn-xs" ng-click="viewTenderRequest(Proposal)"><i class="fa fc-agenda-view"></i> View </button></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -77,8 +79,8 @@
                             </div>
                             <div class="panel-footer">
                                 <div class="btn-group pull-right">
-                                    <button class="btn btn-danger" ng-click="decline()"><i class="fa fa-chevron-right"></i> DECLINE</button>
-                                    <button class="btn btn-secondary" ng-click="proceedNextStep()"><i class="fa fa-chevron-right"></i> APPROVE</button>
+                                    <button class="btn btn-danger" ng-click="proceedNextStep(decline)"><i class="fa fa-chevron-right"></i> DECLINE</button>
+                                    <button class="btn btn-secondary" ng-click="proceedNextStep(approve)"><i class="fa fa-chevron-right"></i> APPROVE</button>
                                 </div>
                             </div>
                         </div>

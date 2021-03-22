@@ -11,13 +11,25 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">Tender Number</label>
+                                <label class="col-md-3 control-label text-left">Department</label>
+                                <div class="col-md-7">
+                                    <div class="input-group has-feedback">
+                                        <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
+                                        <select data-ng-options="tenderRequest.departmentId as tenderRequest.departmentName for tenderRequest in departmentName" data-ng-model="tenderRequest.departmendId" class="form-control" ng-change='userTypeChange(SystemUser.userTypeId)'>
+                                            <option value="" ng-if="!tenderRequest.departmentId">Select User Department</option>
+                                        </select>
+                                    </div>
+                                    <span class="help-block">System User Department</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label text-left">Tender Request Name</label>
                                 <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-edit"></span></span>
-                                        <input type="text" ng-model="Tender.ReferenceNo" class="form-control" name="fullnameText" placeholder="Enter tender number" >
+                                        <input type="text" ng-model="tenderRequest.tenderRequestName" class="form-control" name="tenderRequestName" placeholder="Enter tender name" required>
                                     </div>
-                                    <span class="help-block">Tender Number</span>
+                                    <span class="help-block">Tender Request Name</span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -25,7 +37,7 @@
                                 <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-edit"></span></span>
-                                        <textarea style="width: 100%" type="text" ng-model="Tender.brief" class="form-control" name="fullnameText" placeholder="Enter request brief" ></textarea>
+                                        <textarea type="text" ng-model="tenderRequest.tenderRequestBrief" class="form-control" name="tenderRequestBrief" placeholder="Enter request brief" required></textarea>
                                     </div>
                                     <span class="help-block">Request Description</span>
                                 </div>
@@ -33,25 +45,15 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-3 control-label text-left">Tender Request Name</label>
+                                <label class="col-md-3 control-label text-left">Entity Name</label>
                                 <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-edit"></span></span>
-                                        <input type="text" ng-model="Tender.TenderTitle" class="form-control" name="fullnameText" placeholder="Enter tender name" >
+                                        <input type="text" ng-model="tenderRequest.entityName" class="form-control" name="entityName" placeholder="Entity Name" required>
                                     </div>
-                                    <span class="help-block">Tender Description Name</span>
+                                    <span class="help-block">Entity Name</span>
                                 </div>
                             </div>
-<!--                            <div class="form-group">-->
-<!--                                <label class="col-md-3 control-label text-left"> Tender Request Documents</label>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <p class="input-group">-->
-<!--                                        <input type="file" id="myFile" name="filename">-->
-<!--                                    </p>-->
-<!--                                    <span class="help-block">Tender Request Document</span>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                        </div>
                     </div>
 
                 </form>
@@ -75,7 +77,9 @@
                 </table>
                 <div class="panel-footer">
                     <div class="btn-group pull-right">
-                        <button class="btn btn-default" ng-click="ShowTenderRequest = !ShowTenderRequest"><i class="fa fa-times-circle"></i> Cancel</button>
+                        <button class="btn btn-danger" ng-click="deleteTenderRequest(SystemUser, true)"><i class="fa fa-trash-o"></i> Delete </button>
+                       <button class="btn btn-secondary" ng-click="editTenderRequest(SystemUser, true)"><i class="fa fa-edit"></i> Edit</button>
+                        <button class="btn btn-default" ng-click="cancelShowTenderRequest()"><i class="fa fa-times-circle"></i> Cancel</button>
                     </div>
                 </div>
             </div>

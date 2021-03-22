@@ -97,38 +97,42 @@
                                     <thead>
                                     <tr>
                                         <th class="sorting col-centered">No</th>
-                                        <th class="sorting">Tender Title</th>
+                                        <th class="sorting">Proposal Title</th>
                                         <th class="sorting">Entity Name</th>
-                                        <th class="sorting col-left">Reference Number</th>
-                                        <th class="sorting">View Tender Request</th>
+                                        <th class="sorting col-left">Proposal Brief</th>
+                                        <th class="sorting">Processing Stage</th>
                                         <th class="sorting">Status</th>
-                                        <th class="sorting">Message</th>
+                                        <th class="sorting">View Process</th>
+                                        <th class="sorting">Action</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="Tender in Tenders track by $index">
+                                    <tr ng-repeat="Proposal in Proposals track by $index">
                                         <td>{{$index + 1}}</td>
-                                        <td>{{Tender.TenderTitle}}</td>
-                                        <td>{{Tender.EntityName}}</td>
-                                        <td>{{Tender.ReferenceNo}}</td>
-                                        <td><button class="btn btn-default btn-xs" ng-click="viewTenderRequest(Tender)"><i class="fa fc-agenda-view"></i> View </button></td>
+                                        <td>{{Proposal.tenderRequestName}}</td>
+                                        <td>{{Proposal.entityName}}</td>
+                                        <td>{{Proposal.tenderRequestBrief}}</td>
+                                        <td>{{Proposal.processingStage}}</td>
+                                        <td>{{Proposal.approvalStatus}}</td>
                                         <td>
                                             <div class="btn-group pull-left">
-                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Tender)" ng-if="Tender.stage == 'opening'"> HEAD OF DEPARTMENT</button>
-                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Tender, false)" ng-if="Tender.stage == 'evaluation'">FINANCE OFFICE</button>
-                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Tender, true)" ng-if="Tender.stage == 'awarded'"> HEAD OF FINANCE</button>
-                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Tender, true)" ng-if="Tender.stage == 'contract'"> ACCOUNTING OFFICER</button>
-                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Tender, true)" ng-if="Tender.stage == 'lpo'"> PROCUREMENT OFFICE</button>
+                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Proposal)" ng-if="Proposal.processingStage == 'Head of department'"> HEAD OF DEPARTMENT</button>
+                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Proposal, false)" ng-if="Proposal.processingStage == 'Finance office'">FINANCE OFFICE</button>
+                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Proposal, true)" ng-if="Proposal.processingStage == 'Head of finance'"> HEAD OF FINANCE</button>
+                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Proposal, true)" ng-if="Proposal.processingStage == 'Accounting officer'"> ACCOUNTING OFFICER</button>
+                                                <button class="btn btn-success btn-xs" ng-click="processProposal(Proposal, true)" ng-if="Proposal.processingStage == 'Procurement office'"> PROCUREMENT OFFICE</button>
 
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="btn-group pull-left">
-                                                <button class="btn btn-danger btn-xs" ng-click="chatBox(Tender)"><i class="fa fa-envelope"></i> Chat </button>
-                                                <!--<button h00ssion='LOCK_USERS' class="btn btn-success btn-xs" ng-click="unlockUser(SystemUser, true)"><i class="fa fa-unlock-alt"></i> Unlock </button>-->
-                                            </div>
-                                        </td>
+                                        <td><button class="btn btn-default btn-xs" ng-click="viewTenderRequest(Proposal)"><i class="fa fc-agenda-view"></i> View </button></td>
+
+<!--                                        <td>-->
+<!--                                            <div class="btn-group pull-left">-->
+<!--                                                <button class="btn btn-danger btn-xs" ng-click="chatBox(Tender)"><i class="fa fa-envelope"></i> Chat </button>-->
+<!--                                                &lt;!&ndash;<button h00ssion='LOCK_USERS' class="btn btn-success btn-xs" ng-click="unlockUser(SystemUser, true)"><i class="fa fa-unlock-alt"></i> Unlock </button>&ndash;&gt;-->
+<!--                                            </div>-->
+<!--                                        </td>-->
                                     </tr>
                                     </tbody>
                                 </table>

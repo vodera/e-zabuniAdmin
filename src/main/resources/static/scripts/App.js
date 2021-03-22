@@ -535,6 +535,7 @@ app.config(function ($routeProvider, $locationProvider, IdleProvider, KeepaliveP
             }).otherwise({redirectTo: "/dashboard"});
 }).
         run(function ($rootScope, $localStorage, $window, Idle) {
+            console.log($window.localStorage.getItem('token'));
 //             console.log('Starting application');
 //             $localStorage.loggedInUser = angular.fromJson($window.localStorage.getItem('loggedInUser'));
 //             console.log("loggedInUser", $localStorage.loggedInUser);
@@ -588,6 +589,8 @@ var urlBase = 'http://localhost:8080/api/';
 var BaseURL = "https://xecdapi.xe.com/"
 /* SYSTEM IDLE TIMEOUT */
 var idleTimeout = 15 * 60; //In Seconds
+
+// var token = $window.localStorage.getItem('token');
 
 //HEADER VALUE
 var hValue = document.head.querySelector("[name=_csrf]").content;
@@ -808,6 +811,158 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
         }
 
     }])
+
+
+    .controller('ProposalListCtrl', ['$rootScope', '$scope', 'DataService', '$localStorage', '$window', '$filter',
+        function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
+
+            $scope.listUsers = function () {
+                $scope.progressBar = $rootScope.showProgress();
+                DataService.getProposals().then(function (response) {
+                    console.log("Proposals Data:", response);
+                    $scope.Proposals = response.data;
+                    // $rootScope.setPaginationParams(response.data.data);
+                    $scope.progressBar.close();
+                    //Scroll top of page
+                    // $window.scrollTo(0, 0);
+                }, function (error) {
+                    console.log("Error", error);
+                    $scope.progressBar.close();
+                    if (error.status === -1) {
+                        $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                    } else if (error.status === 401) {
+                        $rootScope.expiredToken();
+                    } else if (error.status === 403) {
+                        $rootScope.notify('error', 'Error', error.data.message);
+                        $window.location = '#/Error';
+                    } else {
+                        $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message);
+                    }
+                });
+            };
+
+            $scope.listUsers();
+
+
+            $scope.chatBox = function (){
+                $scope.chat = true;
+            }
+            $scope.processProposal = function (Proposal){
+                $scope.Proposal = Proposal;
+                $window.location='#/ProcessProposal'
+            }
+
+
+            $scope.Notifications =
+                [
+                    {notification: "NO", companyName: "Turubini Limited"},
+                    {notification: "NO", companyName: "QWERTY Solutions"},
+                    {notification: "YES", companyName: "ATRIA Group Limited"},
+                    {notification: "NO", companyName: "Microsoft Solutions"}]
+
+            $scope.ViewTender = function (Tender, editMode){
+                $scope.ShowTenderView = true;
+            };
+
+
+            $scope.ShowUserView = false;
+            $scope.SystemUserForm = false;
+            $scope.CurrentTab = 1;
+            $scope.resetUsersFilter = function () {
+                $scope.UserFilter = {};
+                var startDate = new Date();
+                startDate.setDate(1);
+                $scope.UserFilter.dateFrom = startDate;
+                $scope.UserFilter.dateTo = new Date();
+                $scope.listUsers();
+            };
+
+            $scope.Tenders =
+                [{  TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER",
+                    TenderType: "Open Tender",
+                    EntityName:"National Irrigation Board",
+                    ApplicationFee: "0",
+                    PublishDate: "25th-July-2020",
+                    CloseDate: "25th-Aug-2020",
+                    ReferenceNo:"NIB/T/006/2018-2017",
+                    Status: "Published",
+                    EntityType:"State Corporation",
+                    TenderCategory:"Works",
+                    OpeningVenue:"Nile Basin Board Room,NIB,Lenana Road Hurlingham",
+                    OpeningDate:"25th-Sep-2020",
+                    OpeningTime:"12:00:00",
+                    OtherDetails:"TENDER  FOR REHABILITATION WORKS OF MBWALENI WATER PAN  PROJECT IN  KWALE COUNTY",
+                    stage: "opening",
+                    brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya"
+
+                },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Closed Tender", EntityName:"National Irrigation Board", ApplicationFee: "2000", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed", stage:"evaluation", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Restricted Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published", stage:"awarded", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed", stage:"contract", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
+                    {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published", stage:"lpo", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" }
+                ];
+
+            $scope.Notifications =
+                [
+                    {notification: "NO", companyName: "Turubini Limited"},
+                    {notification: "NO", companyName: "QWERTY Solutions"},
+                    {notification: "YES", companyName: "ATRIA Group Limited"},
+                    {notification: "NO", companyName: "Microsoft Solutions"}]
+
+            $scope.viewTenderRequest = function (Proposal){
+                $scope.tenderRequest = Proposal;
+                $scope.ShowTenderRequest = true;
+            };
+
+            $scope.cancelShowTenderRequest = function (){
+                $scope.ShowTenderRequest = false;
+            };
+        }])
+
+    .controller('CreateProposalCtrl', ['$rootScope', '$scope', 'DataService', '$localStorage', '$window', '$filter',
+        function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
+        $scope.tenderRequest={};
+
+            $scope.saveProposal = function () {
+                if (!$scope.TenderRequest.$valid) {
+                    return;
+                }
+                $scope.tenderRequest.departmentId = 2;
+                $scope.tenderRequest.tenderRequestDocument = "initial document";
+                $scope.tenderRequest.processingStage = "Head of department";
+                $scope.tenderRequest.approvalStatus = "Processing";
+                $scope.progressBar = $rootScope.showProgress();
+                console.log($scope.tenderRequest);
+                DataService.saveTenderRequest($scope.tenderRequest).then(function (response) {
+                    console.log("Tender request creation resp:", response);
+                    $scope.progressBar.close();
+                    $rootScope.notify('success', 'Success', "Tender request successfully created.");
+                    $window.location = '#/ProposalList';
+                }, function (error) {
+                    console.log("Error", error);
+                    $scope.progressBar.close();
+                    if (error.status === -1) {
+                        $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                    } else if (error.status === 401) {
+                        $rootScope.expiredToken();
+                    } else if (error.status === 403) {
+                        $rootScope.notify('error', 'Error', error.data.message);
+                        $window.location = '#/Error';
+                    } else {
+                        var errors = "";
+                        if (error.data.data) {
+                            errors = " [";
+                            angular.forEach(error.data.data, function (value, key) {
+                                errors = errors + value + ",";
+                            });
+                            errors = errors + "]";
+                        }
+                        $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message + errors);
+                    }
+                });
+            };
+
+        }])
 
     .controller('SubmittedTenderCtrl', ['$rootScope', '$scope', 'DataService', '$localStorage', '$window', '$filter',
         function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
@@ -1190,6 +1345,23 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
 
             switch ($scope.CurrentStep) {
                 case 1:
+                    DataService.processTenderRequest($scope.CurrentStep, $scope.approval).then(function (response) {
+
+                        $scope.progressBar.close();
+                    }, function (error) {
+                        console.log("Error", error);
+                        $scope.progressBar.close();
+                        if (error.status === -1) {
+                            $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                        } else if (error.status === 401) {
+                            $rootScope.expiredToken();
+                        } else if (error.status === 403) {
+                            $rootScope.notify('error', 'Error', error.data.message);
+                            $window.location = '#/Error';
+                        } else {
+                            $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message);
+                        }
+                    });
 
                     $rootScope.notify('success', 'Success', 'Tender request has been approved by Head of Department. E-mail notification has been sent to chain managers');
 
@@ -2381,77 +2553,10 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
 
 
 
-    .controller('ProposalListCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
-
-        $scope.chatBox = function (){
-            $scope.chat = true;
-        }
-        $scope.processProposal = function (Tender){
-            $window.location='#/ProcessProposal'
-        }
-
-
-        $scope.Notifications =
-            [
-                {notification: "NO", companyName: "Turubini Limited"},
-                {notification: "NO", companyName: "QWERTY Solutions"},
-                {notification: "YES", companyName: "ATRIA Group Limited"},
-                {notification: "NO", companyName: "Microsoft Solutions"}]
-
-        $scope.ViewTender = function (Tender, editMode){
-            $scope.ShowTenderView = true;
-        };
-
-
-        $scope.ShowUserView = false;
-        $scope.SystemUserForm = false;
-        $scope.CurrentTab = 1;
-        $scope.resetUsersFilter = function () {
-            $scope.UserFilter = {};
-            var startDate = new Date();
-            startDate.setDate(1);
-            $scope.UserFilter.dateFrom = startDate;
-            $scope.UserFilter.dateTo = new Date();
-            $scope.listUsers();
-        };
-
-        $scope.Tenders =
-            [{  TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER",
-                TenderType: "Open Tender",
-                EntityName:"National Irrigation Board",
-                ApplicationFee: "0",
-                PublishDate: "25th-July-2020",
-                CloseDate: "25th-Aug-2020",
-                ReferenceNo:"NIB/T/006/2018-2017",
-                Status: "Published",
-                EntityType:"State Corporation",
-                TenderCategory:"Works",
-                OpeningVenue:"Nile Basin Board Room,NIB,Lenana Road Hurlingham",
-                OpeningDate:"25th-Sep-2020",
-                OpeningTime:"12:00:00",
-                OtherDetails:"TENDER  FOR REHABILITATION WORKS OF MBWALENI WATER PAN  PROJECT IN  KWALE COUNTY",
-                stage: "opening",
-                brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya"
-
-            },
-                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Closed Tender", EntityName:"National Irrigation Board", ApplicationFee: "2000", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed", stage:"evaluation", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
-                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Restricted Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published", stage:"awarded", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
-                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Closed", stage:"contract", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" },
-                {TenderTitle:"REHABILITATION WORKS OF MBWALENI WATER", TenderType: "Open Tender", EntityName:"National Irrigation Board", ApplicationFee: "0", PublishDate: "25th-Aug-2020", CloseDate: "25th-Aug-2020", ReferenceNo:"NIB/T/006/2018-2017", Status: "Published", stage:"lpo", brief: "Tender Request for rehabilitation works of Mbwaleni Water Pan project in Kwale county, national irrigations board, Nairobi Kenya" }
-            ];
-
-        $scope.Notifications =
-            [
-                {notification: "NO", companyName: "Turubini Limited"},
-                {notification: "NO", companyName: "QWERTY Solutions"},
-                {notification: "YES", companyName: "ATRIA Group Limited"},
-                {notification: "NO", companyName: "Microsoft Solutions"}]
-
-        $scope.viewTenderRequest = function (Tender){
-            $scope.ShowTenderRequest = true;
-            $scope.Tender = Tender;
-        };
-    }])
+    // .controller('ProposalListCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
+    //
+    //
+    // }])
 
 
     .controller('TenderListCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$timeout', '$q', function ($rootScope, $scope, DataService, $window, $timeout, $q) {
@@ -9900,7 +10005,7 @@ app.filter('sentenceCase', function () {
 // })
 
 
-app.service('DataService', ['$localStorage', '$http', '$filter', function ($localStorage, $http, $filter) {
+app.service('DataService', ['$localStorage', '$http', '$filter', '$window', function ($localStorage, $http, $filter, $window) {
 
         /* GET CLIENT IP*/
         var IP = "127.0.0.1";
@@ -10755,6 +10860,21 @@ app.service('DataService', ['$localStorage', '$http', '$filter', function ($loca
 //            headers: { 'X-CSRF-TOKEN':  hValue }
 //        });
         };
+    this.saveTenderRequest = function (tenderRequest) {
+            return $http.post(urlBase + 'tender_request', tenderRequest,
+                {
+                    headers: {'X-CSRF-TOKEN': hValue, 'Authorization': 'Bearer '+ $window.localStorage.getItem('token')}
+                });
+
+    };
+
+    this.getProposals = function () {
+        return $http.get(urlBase + 'tender_request',
+            {
+                headers: {'X-CSRF-TOKEN': hValue, 'Authorization': 'Bearer '+ $window.localStorage.getItem('token')}
+            });
+
+    };
         this.saveUser = function (SystemUser) {
             if (SystemUser.userId !== undefined) {
                 return $http.put(urlBase + 'users/register', SystemUser,

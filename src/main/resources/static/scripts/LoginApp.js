@@ -80,7 +80,7 @@ loginAppp.controller('LoginCtrl', ['$scope', '$rootScope', 'DataService', '$filt
                 console.log("login response", response)
                 // console.debug("Login response:", response.data.data);
                 // $scope.loginSuccessMsg = response.message;
-                // $window.localStorage['fullName'] = response.data.data.userInfo.fullName;
+                $window.localStorage['token'] = response.data.token;
                 // $scope.showLoginSuccessMsg = true;
                 $window.localStorage['flag'] = "isAuthenticated";
                 $window.localStorage['token'] = response.data.token;
