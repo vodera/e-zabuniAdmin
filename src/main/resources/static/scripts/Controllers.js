@@ -218,6 +218,9 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
     .controller('ProposalListCtrl', ['$rootScope', '$scope', 'DataService', '$localStorage', '$window', '$filter',
         function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
 
+        $scope.Departments = JSON.parse((localStorage.getItem("departments")))
+            console.log("Departments---", $scope.Departments)
+
             $scope.listUsers = function () {
                 $scope.progressBar = $rootScope.showProgress();
                 DataService.getProposals().then(function (response) {
@@ -325,11 +328,40 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
         function ($rootScope, $scope, DataService, $localStorage, $window, $filter) {
             $scope.tenderRequest={};
 
+            $scope.loadDepartments = function () {
+                $scope.progressBar = $rootScope.showProgress();
+                DataService.getDepartments(true).then(function (response) {
+                    console.log("Departments Data:", response.data);
+                    $scope.Departments = response.data;
+                    localStorage.setItem("departments", JSON.stringify($scope.Departments));
+                    $scope.progressBar.close();
+                }, function (error) {
+                    console.log("Error", error);
+                    $scope.progressBar.close();
+                    if (error.status === -1) {
+                        $rootScope.notify('warning', 'Warning', 'Network Connectivity Issue Detected');
+                    } else if (error.status === 401) {
+                        $rootScope.expiredToken();
+                    } else if (error.status === 403) {
+                        $rootScope.notify('error', 'Error', error.data.message);
+                        $window.location = '#/Error';
+                    } else {
+                        $rootScope.notify('error', 'Error', error.data === "" ? "Unknown error has occured" : error.data.message);
+                    }
+                });
+            };
+
+            $scope.departmentChange = function(departmentId){
+                console.log("selected department", departmentId)
+                $scope.departmentId = departmentId;
+            };
+
             $scope.saveProposal = function () {
                 if (!$scope.TenderRequest.$valid) {
                     return;
                 }
-                $scope.tenderRequest.departmentId = 2;
+                $scope.tenderRequest.departmentId = $scope.departmentId;
+                console.log("departmentId", $scope.tenderRequest.departmentId)
                 $scope.tenderRequest.tenderRequestDocument = "initial document";
                 $scope.tenderRequest.processingStage = "Head of department";
                 $scope.tenderRequest.approvalStatus = "Processing";
@@ -363,6 +395,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                     }
                 });
             };
+            $scope.loadDepartments();
 
         }])
 
@@ -6902,11 +6935,26 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 }
             });
         };
+
+        $scope.searchCustomer = function (keyword) {
+            var deferred = $q.defer();
+            $timeout(function () {
+                var results = [];
+                DataService.searchCustomer(keyword, ["Approved", "Rejected"]).then(function (dataArray) {
+                    if (dataArray) {
+                        results = dataArray.data.data.content;
+                        deferred.resolve(results);
+                    }
+                });
+            }, 100);
+            return deferred.promise;
+        };
+
         $scope.loadDepartments = function () {
             $scope.progressBar = $rootScope.showProgress();
-            DataService.getDepartments(true, ["Approved", "Rejected"]).then(function (response) {
-                console.log("Departments Data:", response.data.data.content);
-                $scope.Departments = response.data.data.content;
+            DataService.getDepartments(true).then(function (response) {
+                console.log("Departments Data:", response.data);
+                $scope.Departments = response.data;
                 $scope.progressBar.close();
             }, function (error) {
                 console.log("Error", error);
@@ -6923,36 +6971,18 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 }
             });
         };
-        $scope.searchCustomer = function (keyword) {
-            var deferred = $q.defer();
-            $timeout(function () {
-                var results = [];
-                DataService.searchCustomer(keyword, ["Approved", "Rejected"]).then(function (dataArray) {
-                    if (dataArray) {
-                        results = dataArray.data.data.content;
-                        deferred.resolve(results);
-                    }
-                });
-            }, 100);
-            return deferred.promise;
+
+        $scope.departmentChange = function(departmentId){
+            console.log("selected department", departmentId)
+            $scope.departmentId = departmentId;
         };
+
         $scope.saveSystemUser = function () {
             if (!$scope.CreateNewUser.$valid) {
                 console.log($scope.SystemUser.dob)
                 return;
             }
-            // var roleIds = [];
-            // angular.forEach($scope.UserRoles, function (userRole, key) {
-            //     if (userRole.isChecked) {
-            //         roleIds.push(userRole.roleId);
-            //     }
-            // });
-            // console.log("role length", roleIds.length);
-            // if (roleIds.length < 1) {
-            //     $rootScope.notify('warning', 'Warning', "Please select atleast one role");
-            //     return;
-            // }
-            // $scope.SystemUser.roleIds = roleIds;
+            $scope.SystemUser.departmentId = $scope.departmentId;
             $scope.progressBar = $rootScope.showProgress();
             DataService.saveUser($scope.SystemUser).then(function (response) {
                 console.log("User creation resp:", response);
@@ -6982,7 +7012,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 }
             });
         };
-        $scope.loadUserRoles();
+        $scope.loadDepartments();
     }])
     .controller('ApproveSystemUserCtrl', ['$rootScope', '$scope', 'DataService', '$window', '$localStorage', function ($rootScope, $scope, DataService, $window, $localStorage) {
 //                $scope.UserFilter = {};
@@ -7144,10 +7174,10 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
 
         $scope.listUsers = function () {
             $scope.progressBar = $rootScope.showProgress();
-            DataService.getUsers("", $scope.UserFilter).then(function (response) {
-                console.log("Users Data:", response.data.data);
-                $scope.SystemUsers = response.data.data.content;
-                $rootScope.setPaginationParams(response.data.data);
+            DataService.getUserList().then(function (response) {
+                console.log("Users Data:", response.data);
+                $scope.SystemUsers = response.data;
+                // $rootScope.setPaginationParams(response.data.data);
                 $scope.progressBar.close();
                 //Scroll top of page
                 $window.scrollTo(0, 0);
@@ -8257,7 +8287,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
                 $scope.Department = {};
                 $scope.progressBar.close();
                 $scope.ShowDepartmentDlg = false;
-                if ($scope.Department.departmentId !== undefined) {
+                if ($scope.Department.departmentid !== undefined) {
                     $rootScope.notify('success', 'Success', "Department successfully updated");
                 } else {
                     $rootScope.notify('success', 'Success', "Department successfully created");
@@ -8282,7 +8312,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
             $scope.progressBar = $rootScope.showProgress();
             DataService.getDepartments(true, ["Approved", "Rejected"]).then(function (response) {
                 console.log("Resp:", response);
-                $scope.Departments = response.data.data.content;
+                $scope.Departments = response.data;
                 $scope.progressBar.close();
                 $window.scrollTo(0, 0);
             }, function (error) {
@@ -8309,20 +8339,20 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$localStorage', '$window', 
         $scope.closePopup = function () {
             $scope.DeleteDepartmentDlg = false;
         };
-        $scope.regionData = {};
+        // $scope.regionData = {};
         $scope.deleteSystem = function () {
             if (!$scope.DeleteDepartmentForm.$valid) {
                 return;
             }
 
-            var ids = [];
-            ids.push($scope.Department.departmentId);
-            var deleteDepartmentData = {};
-            deleteDepartmentData.ids = ids;
-            deleteDepartmentData.notes = $scope.DepartmentData.notes;
-            console.log(deleteDepartmentData);
+            // var ids = [];
+            // ids.push($scope.Department.departmentId);
+            // var deleteDepartmentData = {};
+            // deleteDepartmentData.ids = ids;
+            // deleteDepartmentData.notes = $scope.DepartmentData.notes;
+            // console.log(deleteDepartmentData);
             $scope.progressBar = $rootScope.showProgress();
-            DataService.deleteDepartment(deleteDepartmentData).then(function (response) {
+            DataService.deleteDepartment($scope.Department).then(function (response) {
                 console.log("Resp:", response);
                 $rootScope.notify('success', 'Success', $scope.Department.departmentName + ' successfully Deleted');
                 $scope.progressBar.close();

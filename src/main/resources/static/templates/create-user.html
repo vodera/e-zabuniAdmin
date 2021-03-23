@@ -25,8 +25,8 @@
                                 <div class="col-md-7">
                                     <div class="input-group has-feedback">
                                         <span class="input-group-addon"><span class="fa fa-caret-down"></span></span>
-                                        <select data-ng-options="SystemUser.id as SystemUser.userType for SystemUser in UserTypes" data-ng-model="SystemUser.departmendId" class="form-control" ng-change='userTypeChange(SystemUser.userTypeId)'>
-                                            <option value="" ng-if="!SystemUser.userTypeId">Select User Department</option>
+                                        <select data-ng-options="Departments.departmentid as Departments.departmentName for Departments in Departments" data-ng-model="SystemUser.departmendId" class="form-control" ng-change='departmentChange(tenderRequest.departmendId)'>
+                                            <option value="" ng-if="!SystemUser.departmentId">Select User Department</option>
                                         </select>
                                     </div>
                                     <span class="help-block">System User Department</span>

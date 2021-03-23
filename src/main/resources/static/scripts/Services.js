@@ -35,6 +35,13 @@ app.service('DataService', ['$localStorage', '$http', '$filter', '$window', func
         }
     };
 
+    this.getUserList = function (fetchAll, actionStatus) {
+        return $http.get(urlBase + 'users',
+            {
+                headers: {'X-CSRF-TOKEN': hValue}
+            });
+    };
+
 
 
     this.logout = function () {
@@ -1158,36 +1165,36 @@ app.service('DataService', ['$localStorage', '$http', '$filter', '$window', func
         }
     };
     this.getDepartments = function (fetchAll, actionStatus) {
-        var status_param = "&actionStatus=";
-        if (actionStatus instanceof Array) {
-            status_param += actionStatus.join("&actionStatus=");
-        } else {
-            status_param += actionStatus;
-        }
-        var pagenationParams = fetchAll ? '&size=99999&page=0' : '&size=' + $localStorage.pageSize + '&page=' + $localStorage.pageNumber;
-        return $http.get(urlBase + 'departments?userIp=' + IP + '&userAgent=Browser/Application' + pagenationParams + status_param,
+        // var status_param = "&actionStatus=";
+        // if (actionStatus instanceof Array) {
+        //     status_param += actionStatus.join("&actionStatus=");
+        // } else {
+        //     status_param += actionStatus;
+        // }
+        // var pagenationParams = fetchAll ? '&size=99999&page=0' : '&size=' + $localStorage.pageSize + '&page=' + $localStorage.pageNumber;
+        // return $http.get(urlBase + 'departments?userIp=' + IP + '&userAgent=Browser/Application' + pagenationParams + status_param,
+        return $http.get(urlBase + 'department',
             {
-                headers: {'X-CSRF-TOKEN': hValue}
+                headers: {'X-CSRF-TOKEN': hValue, 'Authorization': 'Bearer '+ $window.localStorage.getItem('token')}
             });
     };
     this.saveDepartment = function (Department) {
-        if (Department.departmentId !== undefined) {
-            return $http.put(urlBase + 'departments?userIp=' + IP + '&userAgent=Browser/Application', Department,
+        if (Department.departmentid !== undefined) {
+            return $http.put(urlBase + 'department/' + Department.departmentid, Department,
                 {
-                    headers: {'X-CSRF-TOKEN': hValue}
+                    headers: {'X-CSRF-TOKEN': hValue, 'Authorization': 'Bearer '+ $window.localStorage.getItem('token')}
                 });
         } else {
-            return $http.post(urlBase + 'departments?userIp=' + IP + '&userAgent=Browser/Application', Department,
+            return $http.post(urlBase + 'department', Department,
                 {
-                    headers: {'X-CSRF-TOKEN': hValue}
+                    headers: {'X-CSRF-TOKEN': hValue, 'Authorization': 'Bearer '+ $window.localStorage.getItem('token')}
                 });
         }
     };
-    this.deleteDepartment = function (deleteDepartmentData) {
-        return $http.delete(urlBase + 'departments?userIp=' + IP + '&userAgent=Browser/Application',
+    this.deleteDepartment = function (Department) {
+        return $http.delete(urlBase + 'department/' + Department.departmentid,
             {
-                headers: {'X-CSRF-TOKEN': hValue, 'Content-Type': 'application/json'},
-                data: deleteDepartmentData
+                headers: {'X-CSRF-TOKEN': hValue, 'Authorization': 'Bearer '+ $window.localStorage.getItem('token')}
             });
     };
     this.getUnapprovedDepartments = function (fetchAll) {
